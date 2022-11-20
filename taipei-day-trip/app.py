@@ -130,7 +130,6 @@ def api_attractions():
                         "lng": myresult4[i][8],
                         "images": myresult4[i][9].split(","),
                     }
-
                     data4["data"].append(content4)
                 return jsonify(data4)
 
