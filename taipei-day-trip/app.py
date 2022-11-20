@@ -7,8 +7,8 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    passwd="root",
-    database="Taipei_day_trip"
+    passwd="rootroot",
+    database="taipei_day_trip"
 )
 
 
@@ -17,8 +17,8 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/api/attraction", methods=["GET"])
-def api_attraction():
+@app.route("/api/attractions", methods=["GET"])
+def api_attractions():
     try:
         mycursor = db.cursor()
         keyword = request.args.get("keyword")
@@ -46,19 +46,18 @@ def api_attraction():
                 }
                 for i in range(len(myresult2)):
                     content1 = {
-                        "id": str(myresult2[i][0]),
+                        "id": myresult2[i][0],
                         "name": str(myresult2[i][1]),
                         "category": str(myresult2[i][2]),
                         "description": str(myresult2[i][3]),
                         "address": str(myresult2[i][4]),
                         "transport": str(myresult2[i][5]),
                         "mrt": str(myresult2[i][6]),
-                        "lat": str(myresult2[i][7]),
-                        "lng": str(myresult2[i][8]),
+                        "lat": myresult2[i][7],
+                        "lng": myresult2[i][8],
                         "images": myresult2[i][9].split(","),
                     }
                     data1["data"].append(content1)
-
                 return jsonify(data1)
 
             elif len(myresult3) == 0:
@@ -69,24 +68,25 @@ def api_attraction():
 
                 for i in range(len(myresult2)):
                     content2 = {
-                        "id": str(myresult2[i][0]),
+                        "id": myresult2[i][0],
                         "name": str(myresult2[i][1]),
                         "category": str(myresult2[i][2]),
                         "description": str(myresult2[i][3]),
                         "address": str(myresult2[i][4]),
                         "transport": str(myresult2[i][5]),
                         "mrt": str(myresult2[i][6]),
-                        "lat": str(myresult2[i][7]),
-                        "lng": str(myresult2[i][8]),
+                        "lat": myresult2[i][7],
+                        "lng": myresult2[i][8],
                         "images": myresult2[i][9].split(","),
                     }
                     data2["data"].append(content2)
                 return jsonify(data2)
 
-        elif len(myresult1) == 0:  # 如果直接寫myresult==""/myresult is None都印不出來!!!!
+        elif len(myresult1) == 0:
             query4 = "SELECT * FROM attractions WHERE name like %s LIMIT 12 OFFSET %s"
             mycursor.execute(query4, (args, page_cul,))
             myresult4 = mycursor.fetchall()
+
             query5 = "SELECT * FROM attractions WHERE name like %s LIMIT 12 OFFSET %s"
             mycursor.execute(query5, (args, page_cul2,))
             myresult5 = mycursor.fetchall()
@@ -97,43 +97,41 @@ def api_attraction():
                 }
                 for i in range(len(myresult4)):
                     content3 = {
-                        "id": str(myresult4[i][0]),
+                        "id": myresult4[i][0],
                         "name": str(myresult4[i][1]),
                         "category": str(myresult4[i][2]),
                         "description": str(myresult4[i][3]),
                         "address": str(myresult4[i][4]),
                         "transport": str(myresult4[i][5]),
                         "mrt": str(myresult4[i][6]),
-                        "lat": str(myresult4[i][7]),
-                        "lng": str(myresult4[i][8]),
+                        "lat": myresult4[i][7],
+                        "lng": myresult4[i][8],
                         "images": myresult4[i][9].split(","),
-
                     }
 
                     data3["data"].append(content3)
                 return jsonify(data3)
 
-            elif len(myresult5) == 0:
+            elif len(myresult5) != 0:
                 data4 = {
                     "nextPage": nextPage,
                     "data": []
                 }
                 for i in range(len(myresult4)):
-                    content3 = {
-                        "id": str(myresult4[i][0]),
+                    content4 = {
+                        "id": myresult4[i][0],
                         "name": str(myresult4[i][1]),
                         "category": str(myresult4[i][2]),
                         "description": str(myresult4[i][3]),
                         "address": str(myresult4[i][4]),
                         "transport": str(myresult4[i][5]),
                         "mrt": str(myresult4[i][6]),
-                        "lat": str(myresult4[i][7]),
-                        "lng": str(myresult4[i][8]),
+                        "lat": myresult4[i][7],
+                        "lng": myresult4[i][8],
                         "images": myresult4[i][9].split(","),
-
                     }
 
-                    data3["data"].append(content3)
+                    data4["data"].append(content4)
                 return jsonify(data4)
 
     except Exception:
@@ -144,7 +142,7 @@ def api_attraction():
         return jsonify(error), 500
 
 
-@ app.route("/attraction/<id>")
+@ app.route("/api/attraction/<id>")
 def attraction(id):
     error = {
         "error": True,
@@ -153,20 +151,20 @@ def attraction(id):
     try:
         if bool(int(id)) == True:
             mycursor = db.cursor()
-            query5 = "SELECT * FROM attractions WHERE id = %s"
-            mycursor.execute(query5, (id,))
+            query6 = "SELECT * FROM attractions WHERE id = %s"
+            mycursor.execute(query6, (id,))
             myresult6 = mycursor.fetchall()
             data5 = {
                 "data": {
-                    "id": str(myresult6[0][0]),
+                    "id": myresult6[0][0],
                     "name": str(myresult6[0][1]),
                     "category": str(myresult6[0][2]),
                     "description": str(myresult6[0][3]),
                     "address": str(myresult6[0][4]),
                     "transport": str(myresult6[0][5]),
                     "mrt": str(myresult6[0][6]),
-                    "lat": str(myresult6[0][7]),
-                    "lng": str(myresult6[0][8]),
+                    "lat": myresult6[0][7],
+                    "lng": myresult6[0][8],
                     "images": myresult6[0][9].split(","),
                 }
             }
@@ -183,14 +181,13 @@ def attraction(id):
 def api_categories():
     try:
         mycursor = db.cursor()
-        query6 = "SELECT category from attractions GROUP BY category"
-        mycursor.execute(query6)
-        myresult6 = mycursor.fetchall()
-        print(myresult6)
+        query7 = "SELECT category from attractions GROUP BY category"
+        mycursor.execute(query7)
+        myresult7 = mycursor.fetchall()
         data6 = {"data": []}
 
         for i in range(9):
-            data6["data"].append(myresult6[i][0])
+            data6["data"].append(myresult7[i][0])
 
         return jsonify(data6)
     except Exception:
@@ -212,4 +209,4 @@ def thankyou():
 
 
 if __name__ == '__main__':
-    app.run(port=3000, debug=True)
+    app.run(host='0.0.0.0', port=3000, debug=True)
