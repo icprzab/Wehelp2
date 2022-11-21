@@ -27,111 +27,165 @@ def api_attractions():
         nextPage = page + 1
         page_cul = page * 12
         page_cul2 = nextPage * 12
-        query1 = "SELECT * FROM attractions WHERE category = %s"
-        mycursor.execute(query1, (keyword,))
-        myresult1 = mycursor.fetchall()
-        if len(myresult1) != 0:
-            query2 = "SELECT * FROM attractions WHERE category = %s LIMIT 12 OFFSET %s"
-            mycursor.execute(query2, (keyword, page_cul,))
+        if keyword == None:
+            query1_1 = "SELECT * FROM attractions LIMIT 12 OFFSET %s"
+            mycursor.execute(query1_1, (page_cul,))
+            myresult1_1 = mycursor.fetchall()
+
+            query1_2 = "SELECT * FROM attractions LIMIT 12 OFFSET %s"
+            mycursor.execute(query1_2, (page_cul2,))
+            myresult1_2 = mycursor.fetchall()
+
+            if len(myresult1_2) != 0:
+                data1_1 = {
+                    "nextPage": nextPage,
+                    "data": []
+                }
+                for i in range(len(myresult1_1)):
+                    content1_1 = {
+                        "id": myresult1_1[i][0],
+                        "name": str(myresult1_1[i][1]),
+                        "category": str(myresult1_1[i][2]),
+                        "description": str(myresult1_1[i][3]),
+                        "address": str(myresult1_1[i][4]),
+                        "transport": str(myresult1_1[i][5]),
+                        "mrt": str(myresult1_1[i][6]),
+                        "lat": myresult1_1[i][7],
+                        "lng": myresult1_1[i][8],
+                        "images": myresult1_1[i][9].split(","),
+                    }
+                    data1_1["data"].append(content1_1)
+                return jsonify(data1_1)
+
+            elif len(myresult1_2) == 0:
+                data1_2 = {
+                    "nextPage": None,
+                    "data": []
+                }
+                for i in range(len(myresult1_1)):
+                    content1_2 = {
+                        "id": myresult1_1[i][0],
+                        "name": str(myresult1_1[i][1]),
+                        "category": str(myresult1_1[i][2]),
+                        "description": str(myresult1_1[i][3]),
+                        "address": str(myresult1_1[i][4]),
+                        "transport": str(myresult1_1[i][5]),
+                        "mrt": str(myresult1_1[i][6]),
+                        "lat": myresult1_1[i][7],
+                        "lng": myresult1_1[i][8],
+                        "images": myresult1_1[i][9].split(","),
+                    }
+                    data1_2["data"].append(content1_2)
+                return jsonify(data1_2)
+
+        elif keyword != None:
+            query2 = "SELECT * FROM attractions WHERE category = %s LIMIT 12"
+            mycursor.execute(query2, (keyword,))
             myresult2 = mycursor.fetchall()
 
-            query3 = "SELECT * FROM attractions WHERE category = %s LIMIT 12 OFFSET %s"
-            mycursor.execute(query3, (keyword, page_cul2,))
-            myresult3 = mycursor.fetchall()
+            if len(myresult2) != 0:
+                query2_1 = "SELECT * FROM attractions WHERE category = %s LIMIT 12 OFFSET %s"
+                mycursor.execute(query2_1, (keyword, page_cul,))
+                myresult2_1 = mycursor.fetchall()
 
-            if len(myresult3) != 0:
-                data1 = {
-                    "nextPage": nextPage,
-                    "data": []
-                }
-                for i in range(len(myresult2)):
-                    content1 = {
-                        "id": myresult2[i][0],
-                        "name": str(myresult2[i][1]),
-                        "category": str(myresult2[i][2]),
-                        "description": str(myresult2[i][3]),
-                        "address": str(myresult2[i][4]),
-                        "transport": str(myresult2[i][5]),
-                        "mrt": str(myresult2[i][6]),
-                        "lat": myresult2[i][7],
-                        "lng": myresult2[i][8],
-                        "images": myresult2[i][9].split(","),
+                query2_2 = "SELECT * FROM attractions WHERE category = %s LIMIT 12 OFFSET %s"
+                mycursor.execute(query2_2, (keyword, page_cul2,))
+                myresult2_2 = mycursor.fetchall()
+
+                if len(myresult2_2) != 0:
+                    data2_1 = {
+                        "nextPage": nextPage,
+                        "data": []
                     }
-                    data1["data"].append(content1)
-                return jsonify(data1)
+                    for i in range(len(myresult2_1)):
+                        content2_1 = {
+                            "id": myresult2_1[i][0],
+                            "name": str(myresult2_1[i][1]),
+                            "category": str(myresult2_1[i][2]),
+                            "description": str(myresult2_1[i][3]),
+                            "address": str(myresult2_1[i][4]),
+                            "transport": str(myresult2_1[i][5]),
+                            "mrt": str(myresult2_1[i][6]),
+                            "lat": myresult2_1[i][7],
+                            "lng": myresult2_1[i][8],
+                            "images": myresult2_1[i][9].split(","),
+                        }
+                        data2_1["data"].append(content2_1)
+                    return jsonify(data2_1)
 
-            elif len(myresult3) == 0:
-                data2 = {
-                    "nextPage": None,
-                    "data": []
-                }
-
-                for i in range(len(myresult2)):
-                    content2 = {
-                        "id": myresult2[i][0],
-                        "name": str(myresult2[i][1]),
-                        "category": str(myresult2[i][2]),
-                        "description": str(myresult2[i][3]),
-                        "address": str(myresult2[i][4]),
-                        "transport": str(myresult2[i][5]),
-                        "mrt": str(myresult2[i][6]),
-                        "lat": myresult2[i][7],
-                        "lng": myresult2[i][8],
-                        "images": myresult2[i][9].split(","),
+                elif len(myresult2_2) == 0:
+                    data2_2 = {
+                        "nextPage": None,
+                        "data": []
                     }
-                    data2["data"].append(content2)
-                return jsonify(data2)
+                    for i in range(len(myresult2_1)):
+                        content2_2 = {
+                            "id": myresult2_1[i][0],
+                            "name": str(myresult2_1[i][1]),
+                            "category": str(myresult2_1[i][2]),
+                            "description": str(myresult2_1[i][3]),
+                            "address": str(myresult2_1[i][4]),
+                            "transport": str(myresult2_1[i][5]),
+                            "mrt": str(myresult2_1[i][6]),
+                            "lat": myresult2_1[i][7],
+                            "lng": myresult2_1[i][8],
+                            "images": myresult2_1[i][9].split(","),
+                        }
+                        data2_2["data"].append(content2_2)
+                    return jsonify(data2_2)
 
-        elif len(myresult1) == 0:
-            query4 = "SELECT * FROM attractions WHERE name like %s LIMIT 12 OFFSET %s"
-            mycursor.execute(query4, (args, page_cul,))
-            myresult4 = mycursor.fetchall()
+            elif len(myresult2) == 0:
+                query2_3 = "SELECT * FROM attractions WHERE name like %s LIMIT 12 OFFSET %s"
+                mycursor.execute(query2_3, (args, page_cul,))
+                myresult2_3 = mycursor.fetchall()
 
-            query5 = "SELECT * FROM attractions WHERE name like %s LIMIT 12 OFFSET %s"
-            mycursor.execute(query5, (args, page_cul2,))
-            myresult5 = mycursor.fetchall()
-            if len(myresult5) == 0:
-                data3 = {
-                    "nextPage": None,
-                    "data": []
-                }
-                for i in range(len(myresult4)):
-                    content3 = {
-                        "id": myresult4[i][0],
-                        "name": str(myresult4[i][1]),
-                        "category": str(myresult4[i][2]),
-                        "description": str(myresult4[i][3]),
-                        "address": str(myresult4[i][4]),
-                        "transport": str(myresult4[i][5]),
-                        "mrt": str(myresult4[i][6]),
-                        "lat": myresult4[i][7],
-                        "lng": myresult4[i][8],
-                        "images": myresult4[i][9].split(","),
+                query2_4 = "SELECT * FROM attractions WHERE name like %s LIMIT 12 OFFSET %s"
+                mycursor.execute(query2_4, (args, page_cul2,))
+                myresult2_4 = mycursor.fetchall()
+
+                if len(myresult2_4) != 0:
+                    data2_3 = {
+                        "nextPage": nextPage,
+                        "data": []
                     }
+                    for i in range(len(myresult2_3)):
+                        content2_3 = {
+                            "id": myresult2_3[i][0],
+                            "name": str(myresult2_3[i][1]),
+                            "category": str(myresult2_3[i][2]),
+                            "description": str(myresult2_3[i][3]),
+                            "address": str(myresult2_3[i][4]),
+                            "transport": str(myresult2_3[i][5]),
+                            "mrt": str(myresult2_3[i][6]),
+                            "lat": myresult2_3[i][7],
+                            "lng": myresult2_3[i][8],
+                            "images": myresult2_3[i][9].split(","),
+                        }
 
-                    data3["data"].append(content3)
-                return jsonify(data3)
+                        data2_3["data"].append(content2_3)
+                    return jsonify(data2_3)
 
-            elif len(myresult5) != 0:
-                data4 = {
-                    "nextPage": nextPage,
-                    "data": []
-                }
-                for i in range(len(myresult4)):
-                    content4 = {
-                        "id": myresult4[i][0],
-                        "name": str(myresult4[i][1]),
-                        "category": str(myresult4[i][2]),
-                        "description": str(myresult4[i][3]),
-                        "address": str(myresult4[i][4]),
-                        "transport": str(myresult4[i][5]),
-                        "mrt": str(myresult4[i][6]),
-                        "lat": myresult4[i][7],
-                        "lng": myresult4[i][8],
-                        "images": myresult4[i][9].split(","),
+                elif len(myresult2_4) == 0:
+                    data2_4 = {
+                        "nextPage": None,
+                        "data": []
                     }
-                    data4["data"].append(content4)
-                return jsonify(data4)
+                    for i in range(len(myresult2_3)):
+                        content2_4 = {
+                            "id": myresult2_3[i][0],
+                            "name": str(myresult2_3[i][1]),
+                            "category": str(myresult2_3[i][2]),
+                            "description": str(myresult2_3[i][3]),
+                            "address": str(myresult2_3[i][4]),
+                            "transport": str(myresult2_3[i][5]),
+                            "mrt": str(myresult2_3[i][6]),
+                            "lat": myresult2_3[i][7],
+                            "lng": myresult2_3[i][8],
+                            "images": myresult2_3[i][9].split(","),
+                        }
+
+                        data2_4["data"].append(content2_4)
+                    return jsonify(data2_4)
 
     except Exception:
         error = {
@@ -150,24 +204,24 @@ def attraction(id):
     try:
         if bool(int(id)) == True:
             mycursor = db.cursor()
-            query6 = "SELECT * FROM attractions WHERE id = %s"
-            mycursor.execute(query6, (id,))
-            myresult6 = mycursor.fetchall()
-            data5 = {
+            query3 = "SELECT * FROM attractions WHERE id = %s"
+            mycursor.execute(query3, (id,))
+            myresult3 = mycursor.fetchall()
+            data3 = {
                 "data": {
-                    "id": myresult6[0][0],
-                    "name": str(myresult6[0][1]),
-                    "category": str(myresult6[0][2]),
-                    "description": str(myresult6[0][3]),
-                    "address": str(myresult6[0][4]),
-                    "transport": str(myresult6[0][5]),
-                    "mrt": str(myresult6[0][6]),
-                    "lat": myresult6[0][7],
-                    "lng": myresult6[0][8],
-                    "images": myresult6[0][9].split(","),
+                    "id": myresult3[0][0],
+                    "name": str(myresult3[0][1]),
+                    "category": str(myresult3[0][2]),
+                    "description": str(myresult3[0][3]),
+                    "address": str(myresult3[0][4]),
+                    "transport": str(myresult3[0][5]),
+                    "mrt": str(myresult3[0][6]),
+                    "lat": myresult3[0][7],
+                    "lng": myresult3[0][8],
+                    "images": myresult3[0][9].split(","),
                 }
             }
-            return jsonify(data5)
+            return jsonify(data3)
 
     except ValueError:
         return jsonify(error), 400
@@ -180,21 +234,21 @@ def attraction(id):
 def api_categories():
     try:
         mycursor = db.cursor()
-        query7 = "SELECT category from attractions GROUP BY category"
-        mycursor.execute(query7)
-        myresult7 = mycursor.fetchall()
-        data6 = {"data": []}
+        query4 = "SELECT category from attractions GROUP BY category"
+        mycursor.execute(query4)
+        myresult4 = mycursor.fetchall()
+        data4 = {"data": []}
 
         for i in range(9):
-            data6["data"].append(myresult7[i][0])
+            data4["data"].append(myresult4[i][0])
 
-        return jsonify(data6)
+        return jsonify(data4)
     except Exception:
         error = {
             "error": True,
             "message": "請按照情境提供對應的錯誤訊息"
         }
-    return jsonify(error), 500
+        return jsonify(error), 500
 
 
 @ app.route("/booking")
