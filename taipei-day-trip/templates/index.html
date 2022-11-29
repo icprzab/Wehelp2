@@ -15,10 +15,15 @@
             <div class="dialog-width">
                 <div class="taipei101-input-button">
                     <input class="taipei101-input" type="text" id="inputAttraction" type="text" placeholder="輸入景點名稱查詢"
-                        onclick="showDialog()" />
+                        onclick="showDialog()"></input>
                     <button class="taipei101-button" id="taipei101Button"><img src="../static/icon_search.png" />
                 </div>
-                <div id="dialog" class="dialog">再這裡輸入內容</div>
+                <div class="taipei101-input-category">
+                    <div id="dialogOutside" class="dialogOutside">
+                        <div id="dialog" class="dialog"></div>
+                    </div>
+                    <div class="dialog-right"></div>
+                </div>
             </div>
         </div>
         <div class="sectionTop-Outside" onclick="closeDialog()">
@@ -48,7 +53,7 @@
                 <img src="../static/welcome.png" class="taipei101-image" />
             </div>
             <div class="attractions">
-                <div class="flex-container" id="flex-container">
+                <div class="flex-container2" id="flex-container2">
                 </div>
             </div>
             <footer class="footer">COPYRIGHT © 2022 台北一日遊</footer>

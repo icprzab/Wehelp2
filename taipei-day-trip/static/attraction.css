@@ -37,14 +37,47 @@ body {
 
     .dialog {
         width: 400px;
-        height: 162px;
+        display: none;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .dialogOutside {
+        width: 400px;
+        height: 128px;
         background-color: black;
-        position: absolute;
-        top: 51px;
+        margin-top: 5px;
         border-radius: 5px;
         box-shadow: 0px 0px 20px 0px #AABBCC;
         display: none;
         background-color: white;
+    }
+
+
+
+
+    .dialog-right {
+        width: 60px;
+        margin: 0px;
+        padding: 0px;
+        border: 0px;
+    }
+
+    .taipei101-input-category {
+        display: flex;
+    }
+
+    .flexbox {
+        background-color: white;
+        color: black;
+        border: 0px;
+        width: 90px;
+        height: 20px;
+        margin: 11px 15px 11px 15px;
+        font-family: "Noto Sans TC";
+        font-weight: 500;
+        line-height: 20.27px;
+        font-size: 14px;
     }
 
     .sectionTop-Outside {
@@ -128,7 +161,7 @@ body {
     }
 
     .taipei101-input {
-        width: 400px;
+        width: 370px;
         height: 46px;
         border: 0px;
         font-weight: 700;
@@ -139,13 +172,12 @@ body {
         color: #757575;
         font-family: "Noto Sans TC";
         border-radius: 5px 0px 0px 5px;
-        padding: 0px;
+        padding: 0px 15px 0px 15px;
     }
 
     ::placeholder {
         color: #757575;
         font-family: "Noto Sans TC";
-        padding-left: 15px;
         font-weight: 700;
         font-size: 16px;
         line-height: 13.3px;
@@ -185,7 +217,7 @@ body {
         margin-top: -105px;
     }
 
-    .flex-container {
+    .flex-container2 {
         display: flex;
         width: 1280px;
         z-index: 1;
@@ -193,8 +225,8 @@ body {
         justify-content: center;
     }
 
-    .flexbox {
-        min-height: 242px;
+    .flexbox2 {
+        height: 242px;
         width: 270px;
         margin: 0px 15px 30px 15px;
         background-color: white;
@@ -266,7 +298,7 @@ body {
     }
 
     .footer {
-        width: 100%;
+        width: 100vw;
         height: 104px;
         background-color: #757575;
         color: white;
@@ -277,14 +309,15 @@ body {
         font-size: 16px;
         line-height: 13.3px;
         font-weight: 700;
-
     }
 
 
 }
 
 @media (max-width:1280px) {
-
+    .taipei101-input-category {
+        display: flex;
+    }
 
     .dialog-width {
         width: 92vw;
@@ -386,7 +419,7 @@ body {
         margin-top: -105px;
     }
 
-    .flex-container {
+    .flex-container2 {
         display: flex;
         width: 100vw;
         z-index: 1;
@@ -394,7 +427,7 @@ body {
         justify-content: center;
     }
 
-    .flexbox {
+    .flexbox2 {
         min-height: 280px;
         width: 45%;
         margin: 0px 15px 30px 15px;
@@ -461,6 +494,25 @@ body {
 
 
 @media (max-width:600px) {
+
+
+    .dialog {
+        width: 240px;
+    }
+
+    .dialogOutside {
+        width: 400px;
+        height: 260px;
+        background-color: black;
+        margin-top: 5px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 20px 0px #AABBCC;
+        display: none;
+        background-color: white;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
 
     .sectionTop {
         display: flex;
@@ -554,7 +606,7 @@ body {
         margin-top: -105px;
     }
 
-    .flex-container {
+    .flex-container2 {
         display: flex;
         width: 100vw;
         z-index: 1;
@@ -562,7 +614,7 @@ body {
         justify-content: center;
     }
 
-    .flexbox {
+    .flexbox2 {
         min-height: 280px;
         width: 90vw;
         margin: 0px 15px 30px 15px;
