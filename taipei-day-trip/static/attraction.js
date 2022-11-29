@@ -1,5 +1,4 @@
 var page = 0;
-var inputAttraction = document.getElementById("inputAttraction").value;
 
 function getCategories() {
     fetch("/api/categories")
@@ -35,13 +34,14 @@ function closeDialog() {
 }
 
 function getData() {
+    var inputAttraction = document.getElementById("inputAttraction").value;
     fetch("/api/attractions?keyword=" + inputAttraction + "&page=" + page)
         .then(function (response) {
             response.json()
                 .then(function (data) {
                     if (data.nextPage === null) {
-                        observer.unobserve(document.getElementsByClassName("footer")[0]);
                         page = 0;
+                        observer.unobserve(document.getElementsByClassName("footer")[0]);
                         let dataLength = data.data.length;
                         for (let i = 0; i < dataLength; i++) {
                             let attractions = document.createElement("div");
@@ -122,8 +122,8 @@ function handleIntersect(entries) {
 };
 
 document.getElementById("taipei101Button").addEventListener("click", function () {
-    observer.unobserve(document.getElementsByClassName("footer")[0]);
     page = 0;
+    observer.unobserve(document.getElementsByClassName("footer")[0]);
     document.getElementById("flex-container2").innerHTML = "";
     observer.observe(document.getElementsByClassName("footer")[0]);
 })

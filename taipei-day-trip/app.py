@@ -7,7 +7,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    passwd="root",
+    passwd="rootroot",
     database="taipei_day_trip"
 )
 

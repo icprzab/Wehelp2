@@ -53,9 +53,6 @@ body {
         background-color: white;
     }
 
-
-
-
     .dialog-right {
         width: 60px;
         margin: 0px;
@@ -502,7 +499,7 @@ body {
 
     .dialogOutside {
         width: 400px;
-        height: 260px;
+        height: 210px;
         background-color: black;
         margin-top: 5px;
         border-radius: 5px;
