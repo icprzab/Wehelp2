@@ -45,7 +45,7 @@ function getData() {
                         let dataLength = data.data.length;
                         for (let i = 0; i < dataLength; i++) {
                             let attractions = document.createElement("a");
-                            attractions.setAttribute("href", " http://172.20.10.4:3000/attraction/" + data.data[i].id);
+                            attractions.setAttribute("href", " http://54.248.52.136:3000/attraction/" + data.data[i].id);
                             document.getElementById("flex-container2").appendChild(attractions).setAttribute("class", "flexbox2");
 
                             let img = document.createElement("img");
