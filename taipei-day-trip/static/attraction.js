@@ -1,132 +1,144 @@
-var page = 0;
 
-function getCategories() {
-    fetch("/api/categories")
-        .then(function (response) {
-            response.json()
-                .then(function (data) {
-                    let dataLength3 = data.data.length;
-                    for (let i = 0; i < dataLength3; i++) {
-                        let categories = document.createElement("button");
-                        categories.textContent = data.data[i];
-                        categories.setAttribute("onclick", `inputCategory("${data.data[i]}")`);
-                        document.getElementById("dialog").appendChild(categories).setAttribute("class", "flexbox");
-                    }
-                })
-        })
-}
-getCategories();
-
-function inputCategory(inputData) {
-    var input = document.getElementById("inputAttraction");
-    input.value = inputData;
-};
-
-var dialog = document.getElementById("dialog");
-function showDialog() {
-    dialogOutside.style.display = "flex";
-    dialog.style.display = "flex";
-}
-
-function closeDialog() {
-    dialogOutside.style.display = "none";
-    dialog.style.display = "none";
-}
+var attractionID = location.pathname;
+var split = attractionID.split("/");
+var id = split[2];
+var counter = 1;
 
 function getData() {
-    var inputAttraction = document.getElementById("inputAttraction").value;
-    fetch("/api/attractions?keyword=" + inputAttraction + "&page=" + page)
+    fetch("/api/attraction/" + id)
         .then(function (response) {
             response.json()
                 .then(function (data) {
-                    if (data.nextPage === null) {
-                        page = 0;
-                        observer.unobserve(document.getElementsByClassName("footer")[0]);
-                        let dataLength = data.data.length;
-                        for (let i = 0; i < dataLength; i++) {
-                            let attractions = document.createElement("div");
-                            document.getElementById("flex-container2").appendChild(attractions).setAttribute("class", "flexbox2");
+                    let imageLength = data.data.images.length
 
-                            let img = document.createElement("img");
-                            img.src = data.data[i].images[0];
-                            attractions.appendChild(img).setAttribute("class", "flexbox-image");
+                    for (let i = 0; i < imageLength; i++) {
+                        let img = document.createElement("img");
+                        img.src = data.data.images[i];
+                        document.getElementById("attraction-image").appendChild(img).setAttribute("class", "attraction-image1 fade");
+                        img.style.zIndex = -i;
 
-                            let attractionsData = document.createElement("div");
-                            attractions.appendChild(attractionsData).setAttribute("class", "attractionsBottom");
+                        let dot = document.createElement("div");
+                        document.getElementById("attraction-dot-outside").appendChild(dot).setAttribute("class", "attraction-dot");
 
-                            let attractionsBottomMRT = document.createElement("div");
-                            attractionsBottomMRT.textContent = data.data[i].mrt;
-                            attractionsData.appendChild(attractionsBottomMRT).setAttribute("class", "attractionsBottomMRT");
+                        let dotEach = document.createElement("button");
+                        dotEach.setAttribute("onclick", `currentSlide(${[i + 1]})`);
+                        dotEach.setAttribute("id", `dot${[i + 1]}`);
 
-                            let attractionsBottomCAT = document.createElement("div");
-                            attractionsBottomCAT.textContent = data.data[i].category;
-                            attractionsData.appendChild(attractionsBottomCAT).setAttribute("class", "attractionsBottomCAT");
-
-                            let attractionsMiddle = document.createElement("div");
-                            attractions.appendChild(attractionsMiddle).setAttribute("class", "attractionsMiddle");
-
-                            let attractionsMiddleText = document.createElement("div");
-                            attractionsMiddleText.textContent = data.data[i].name;
-                            attractionsMiddle.appendChild(attractionsMiddleText).setAttribute("class", "attractionsMiddleText");
-                        }
+                        dot.appendChild(dotEach).setAttribute("class", "attraction-dot1");
+                        // document.getElementById(`dot${[i + 1]}`).style.backgroundColor = "white";
+                        document.getElementById("dot1").style.backgroundColor = "black";
                     }
 
-                    else if (data.nextPage !== null) {
-                        let dataLength = data.data.length;
-                        for (let i = 0; i < dataLength; i++) {
+                    let attractionName = document.createElement("div");
+                    attractionName.textContent = data.data.name;
+                    document.getElementById("attraction-name").appendChild(attractionName).setAttribute("class", "attraction-name1");
 
-                            let attractions = document.createElement("div");
-                            document.getElementById("flex-container2").appendChild(attractions).setAttribute("class", "flexbox2");
-
-                            let img = document.createElement("img");
-                            img.src = data.data[i].images[0];
-                            attractions.appendChild(img).setAttribute("class", "flexbox-image");
-
-                            let attractionsData = document.createElement("div");
-                            attractions.appendChild(attractionsData).setAttribute("class", "attractionsBottom");
-
-                            let attractionsBottomMRT = document.createElement("div");
-                            attractionsBottomMRT.textContent = data.data[i].mrt;
-                            attractionsData.appendChild(attractionsBottomMRT).setAttribute("class", "attractionsBottomMRT");
-
-                            let attractionsBottomCAT = document.createElement("div");
-                            attractionsBottomCAT.textContent = data.data[i].category;
-                            attractionsData.appendChild(attractionsBottomCAT).setAttribute("class", "attractionsBottomCAT");
+                    let attractionCAT = document.createElement("div");
+                    attractionCAT.textContent = data.data.category + " at " + data.data.mrt;
+                    document.getElementById("attraction-name").appendChild(attractionCAT).setAttribute("class", "attraction-name2");
 
 
-                            let attractionsMiddle = document.createElement("div");
-                            attractions.appendChild(attractionsMiddle).setAttribute("class", "attractionsMiddle");
+                    let attractionTextInfo = document.createElement("div");
+                    attractionTextInfo.textContent = data.data.description;
+                    document.getElementById("attraction-text-info").appendChild(attractionTextInfo).setAttribute("class", "attraction-text-info");
 
-                            let attractionsMiddleText = document.createElement("div");
-                            attractionsMiddleText.textContent = data.data[i].name;
-                            attractionsMiddle.appendChild(attractionsMiddleText).setAttribute("class", "attractionsMiddleText");
-                        }
-                        page = data.nextPage;
-                    }
+                    let attractionTextAddress1 = document.createElement("div");
+                    attractionTextAddress1.textContent = "景點地址：";
+                    document.getElementById("attraction-text-address").appendChild(attractionTextAddress1).setAttribute("class", "attraction-text-address1");
+
+                    let attractionTextAddress2 = document.createElement("div");
+                    attractionTextAddress2.textContent = data.data.address;
+                    document.getElementById("attraction-text-address").appendChild(attractionTextAddress2).setAttribute("class", "attraction-text-address2");
+
+                    let attractionTextTrans1 = document.createElement("div");
+                    attractionTextTrans1.textContent = "交通方式：";
+                    document.getElementById("attraction-text-trans").appendChild(attractionTextTrans1).setAttribute("class", "attraction-text-trans1");
+
+                    let attractionTextTrans2 = document.createElement("div");
+                    attractionTextTrans2.textContent = data.data.transport;
+                    document.getElementById("attraction-text-trans").appendChild(attractionTextTrans2).setAttribute("class", "attraction-text-trans2");
+
+                    // let attractionImage = document.getElementById("attraction-image");
+                    // let image = attractionImage.getElementsByTagName("img");
+                    // let imageWidth = image[3].clientWidth;
+
+                    // let cal = -imageWidth * counter + "px";
+                    // let transform = `translateX(${cal})`;
+                    // attractionImage.style.transform = `"${transform}"`;
+
                 })
         })
 }
 
-var options = {
-    rootMargin: "0px 0px 0px 0px",
-    threshold: 0.5
+getData();
+var text = document.getElementById("attraction-booking5-fee2");
+var button1 = document.getElementById("attraction-booking4-button1");
+var button2 = document.getElementById("attraction-booking4-button2");
+
+function first() {
+    text.innerHTML = "新台幣 2000 元";
+    button1.style.backgroundColor = "#448899";
+    button2.style.backgroundColor = "white";
 };
 
-var observer = new IntersectionObserver(handleIntersect, options);
-observer.observe(document.getElementsByClassName("footer")[0]);
+function second() {
+    text.innerHTML = "新台幣 2500 元";
+    button1.style.backgroundColor = "white";
+    button2.style.backgroundColor = "#448899";
+};
 
-function handleIntersect(entries) {
-    if (entries[0].isIntersecting) {
-        getData();
+
+let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+    showSlides(slideIndex = n);
+}
+
+
+function showSlides(n) {
+    let i;
+    let slides = document.getElementsByClassName("attraction-image1");
+    let dots = document.getElementsByClassName("attraction-dot1");
+    document.getElementById("dot1").style.backgroundColor = "white";
+    if (n > slides.length) { slideIndex = 1 }
+    if (n < 1) { slideIndex = slides.length }
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
     }
-};
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex - 1].style.display = "flex";
+    document.getElementById("dot1").style.backgroundColor = "";
+    dots[slideIndex - 1].className += " active";
+}
 
-document.getElementById("taipei101Button").addEventListener("click", function () {
-    page = 0;
-    observer.unobserve(document.getElementsByClassName("footer")[0]);
-    document.getElementById("flex-container2").innerHTML = "";
-    observer.observe(document.getElementsByClassName("footer")[0]);
-})
+
+
+
+// function showSlides(n) {
+//     let i;
+//     let slides = document.getElementsByClassName("attraction-image1");
+//     let dots = document.getElementsByClassName("attraction-dot1");
+//     document.getElementById("dot1").style.backgroundColor = "white";
+//     if (n > slides.length) { slideIndex = 1 }
+//     if (n < 1) { slideIndex = slides.length }
+//     for (i = 0; i < slides.length; i++) {
+//         slides[i].style.display = "none";
+//     }
+//     for (i = 0; i < dots.length; i++) {
+//         document.getElementById(`dot${[i]}`).style.backgroundColor = "white";
+//     }
+//     slides[slideIndex - 1].style.display = "flex";
+//     document.getElementById(`dot${[slideIndex - 1]}`).style.backgroundColor = "black";
+// }
 
 
 

@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>week-10</title>
+    <title>Wehelp</title>
     <link rel="stylesheet" href="{{url_for('static',filename='attraction.css')}}">
-
 </head>
 
 <body>
+
     <div class="sectionTop">
         <div class="sectionTop-space-between">
             <div class="sectionTop-1">
@@ -24,32 +24,66 @@
                 <div class="sectionTop-2-1">
                     登入/註冊
                 </div>
-
             </div>
         </div>
-
     </div>
+    <div class="attraction-outside">
+        <div class="attraction-width">
+            <div class="attraction-image" id="attraction-image">
+                <button class="attraction-button-left" id="buttonLeft" onclick="plusSlides(-1)">
+                    <img src="../static/btn_leftArrow.png" />
+                </button>
+                <button class="attraction-button-right" id="buttonRight" onclick="plusSlides(1)">
+                    <img src="../static/btn_rightArrow.png" /></button>
+                <div class="attraction-dot-outside" id="attraction-dot-outside">
+                </div>
 
-    <div class="taipei101">
-        <div class="taipei101-1">
-            輕鬆享受台北一日悠閒
-        </div>
-        <div class="taipei101-2">
-            探索每個角落，體驗城市的深度旅遊行程
-        </div>
-        <div class="taipei101-3"></div>
-        <img src="../static/welcome.png" class="taipei101-image" />
-    </div>
+            </div>
 
-    <div class="attractions">
-        <div class="flex-container" id="flex-container">
+            <div class="attraction-right">
+                <div class="attraction-name" id="attraction-name"></div>
+                <div class="attraction-booking" id="attraction-booking">
+                    <div class="attraction-booking1">訂購導覽行程</div>
+                    <div class="attraction-booking2">以此景點為中心的一日行程，帶您探索城市角落故事</div>
+                    <div class="attraction-booking3">
+                        <div class="attraction-booking3-date1">選擇日期：</div>
+                        <input class="attraction-booking3-date2" type="date" />
+                    </div>
+                    <div class="attraction-booking4">
+                        <div class="attraction-booking4-date1">選擇時間：</div>
+                        <button class="attraction-booking4-button1" onclick="first()"
+                            id="attraction-booking4-button1"></button>
+                        <div class="attraction-booking4-date2">上半天</div>
+                        <button class="attraction-booking4-button2" onclick="second()"
+                            id="attraction-booking4-button2"></button>
+                        <div class="attraction-booking4-date2">下半天</div>
+                    </div>
+                    <div class="attraction-booking5">
+                        <div class="attraction-booking5-fee1">導覽費用：</div>
+                        <div class="attraction-booking5-fee2" id="attraction-booking5-fee2">新台幣 2000 元</div>
+                    </div>
+                    <div class="attraction-booking6"> <button class="attraction-booking6-button">開始預約行程</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    </div>
+    <div class="separator-outside">
+        <div class="separator"></div>
+    </div>
+    <div class="attraction-text-outside">
+        <div class="attraction-text">
+            <div class="attraction-text-info" id="attraction-text-info"></div>
+            <div class="attraction-text-address" id="attraction-text-address"></div>
+            <div class="attraction-text-trans" id="attraction-text-trans"></div>
+        </div>
+    </div>
+    <footer class="footer">COPYRIGHT © 2022 台北一日遊</footer>
+
 
 </body>
 
 <script src="{{url_for('static',filename='attraction.js')}}" type="text/javascript"></script>
-
-
 
 </html>
