@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, session, jsonify
 import mysql.connector
+
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 app.config["JSON_SORT_KEYS"] = False
@@ -195,8 +196,13 @@ def api_attractions():
         return jsonify(error), 500
 
 
-@ app.route("/api/attraction/<id>")
+@ app.route("/attraction/<id>")
 def attraction(id):
+    return render_template("attraction.html", id=id)
+
+
+@ app.route("/api/attraction/<id>")
+def api_attraction(id):
     error = {
         "error": True,
         "message": "請按照情境提供對應的錯誤訊息"
