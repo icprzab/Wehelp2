@@ -20,9 +20,200 @@ body {
         position: relative;
         display: flex;
         justify-content: center;
+        z-index: 5;
     }
 
-    .dialog-outside {
+    .windowBackground {
+        position: fixed;
+        z-index: 2;
+        width: 100vw;
+        background-color: black;
+        opacity: 0.25;
+        display: none;
+        min-height: 100%;
+        height: 100vh;
+    }
+
+    .windowOutside {
+        position: relative;
+        display: none;
+        justify-content: center;
+    }
+
+    .windowPage {
+        position: fixed;
+        z-index: 3;
+        width: 340px;
+        height: 275px;
+        background-color: white;
+        margin-top: 80px;
+        border-radius: 6px;
+    }
+
+    .window-inside {
+        position: relative;
+        display: grid;
+        justify-items: center;
+        align-items: start;
+        width: 100%;
+        height: 100%;
+    }
+
+    .window-inside-top {
+        width: 340px;
+        height: 10px;
+        background: linear-gradient(90deg, #66AABB, #337788);
+        border-radius: 6px 6px 0px 0px;
+    }
+
+    .window-inside-closebutton {
+        position: absolute;
+        z-index: 4;
+        padding: 0px;
+        border: 0px;
+        background-color: white;
+        left: calc(100% - 35px);
+        top: 27px;
+    }
+
+
+    .window-inside-text-member {
+        display: flex;
+        justify-content: center;
+        color: #666666;
+        font-family: "Noto Sans TC";
+        font-size: 24px;
+        font-weight: 700;
+        width: 310px;
+    }
+
+    .window-inside-input {
+        width: 295px;
+        height: 47px;
+        padding: 0px 0px 0px 15px;
+        border-width: 0px;
+        border: solid 1px #CCCCCC;
+        border-radius: 5px;
+    }
+
+    .window-inside-input-name {
+        display: none;
+        width: 295px;
+        height: 47px;
+        padding: 0px 0px 0px 15px;
+        border-width: 0px;
+        border: solid 1px #CCCCCC;
+        border-radius: 5px;
+    }
+
+    .window-inside-login {
+        width: 310px;
+        height: 47px;
+        background-color: #448899;
+        padding: 0px;
+        border-width: 0px;
+        border-radius: 5px;
+        color: white;
+        font-family: "Noto Sans TC";
+        font-size: 19px;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .window-inside-email-repeat {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 310px;
+        background-color: white;
+        font-family: "Noto Sans TC";
+        font-size: 14px;
+        font-weight: 500;
+        color: red;
+        height: 17px;
+    }
+
+    .window-inside-signup-success {
+        display: none;
+        justify-content: center;
+        width: 310px;
+        background-color: white;
+        font-family: "Noto Sans TC";
+        font-size: 14px;
+        font-weight: 500;
+        color: #1cdc2c;
+        height: 17px;
+    }
+
+    .window-inside-signup-fail {
+        display: none;
+        justify-content: center;
+        width: 310px;
+        background-color: white;
+        font-family: "Noto Sans TC";
+        font-size: 14px;
+        font-weight: 500;
+        color: red;
+        height: 17px;
+    }
+
+    .window-inside-login-fail {
+        display: none;
+        justify-content: center;
+        width: 310px;
+        background-color: white;
+        font-family: "Noto Sans TC";
+        font-size: 14px;
+        font-weight: 500;
+        color: red;
+        height: 17px;
+    }
+
+    .window-inside-signup {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 310px;
+        height: 47px;
+        background-color: #448899;
+        padding: 0px;
+        border-width: 0px;
+        border-radius: 5px;
+        color: white;
+        font-family: "Noto Sans TC";
+        font-size: 19px;
+        font-weight: 400;
+    }
+
+    .window-inside-text-signup {
+        display: flex;
+        justify-content: center;
+        width: 310px;
+        background-color: white;
+        border-width: 0px;
+        padding: 0px;
+        font-family: "Noto Sans TC";
+        font-size: 16px;
+        font-weight: 500;
+        color: #666666;
+    }
+
+    .window-inside-text-signin {
+        display: none;
+        justify-content: center;
+        width: 310px;
+        background-color: white;
+        border-width: 0px;
+        padding: 0px;
+        font-family: "Noto Sans TC";
+        font-size: 16px;
+        font-weight: 500;
+        color: #666666;
+    }
+
+    .taipei101-input-outside {
         width: 100vw;
         display: flex;
         justify-content: center;
@@ -31,13 +222,13 @@ body {
         top: 242px;
     }
 
-    .dialog-width {
+    .taipei101-input-width {
         width: 1180px;
     }
 
     .dialog {
         width: 400px;
-        display: none;
+        display: flex;
         flex-wrap: wrap;
         justify-content: center;
     }
@@ -45,7 +236,6 @@ body {
     .dialogOutside {
         width: 400px;
         height: 128px;
-        background-color: black;
         margin-top: 5px;
         border-radius: 5px;
         box-shadow: 0px 0px 20px 0px #AABBCC;
@@ -109,8 +299,9 @@ body {
         display: flex;
     }
 
-    .sectionTop-2-1 {
+    .sectionTopBooking {
         margin: 0px 10px 0px 10px;
+        display: flex;
         position: relative;
         z-index: 1;
         color: #666666;
@@ -118,6 +309,39 @@ body {
         line-height: 13.3px;
         font-size: 16px;
         font-weight: 500;
+        background-color: white;
+        border: 0px;
+        padding: 0px;
+    }
+
+    .sectionTopLogin {
+        margin: 0px 10px 0px 10px;
+        display: flex;
+        position: relative;
+        z-index: 1;
+        color: #666666;
+        font-family: "Noto Sans TC";
+        line-height: 13.3px;
+        font-size: 16px;
+        font-weight: 500;
+        background-color: white;
+        border: 0px;
+        padding: 0px;
+    }
+
+    .sectionTopLogout {
+        margin: 0px 10px 0px 10px;
+        display: none;
+        position: relative;
+        z-index: 1;
+        color: #666666;
+        font-family: "Noto Sans TC";
+        line-height: 13.3px;
+        font-size: 16px;
+        font-weight: 500;
+        background-color: white;
+        border: 0px;
+        padding: 0px;
     }
 
     .taipei101 {
@@ -317,7 +541,7 @@ body {
         display: flex;
     }
 
-    .dialog-width {
+    .taipei101-input-width {
         width: 92vw;
     }
 
@@ -353,8 +577,33 @@ body {
     }
 
 
-    .sectionTop-2-1 {
+    .sectionTopBooking {
         margin: 0px 10px 0px 10px;
+        display: flex;
+        position: relative;
+        z-index: 1;
+        color: #666666;
+        font-family: "Noto Sans TC";
+        line-height: 13.3px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    .sectionTopLogin {
+        margin: 0px 10px 0px 10px;
+        display: flex;
+        position: relative;
+        z-index: 1;
+        color: #666666;
+        font-family: "Noto Sans TC";
+        line-height: 13.3px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    .sectionTopLogout {
+        margin: 0px 10px 0px 10px;
+        display: none;
         position: relative;
         z-index: 1;
         color: #666666;
@@ -539,7 +788,7 @@ body {
     }
 
 
-    .sectionTop-2-1 {
+    .sectionTopBooking {
         margin: 0px 10px 0px 10px;
         position: relative;
         z-index: 1;
