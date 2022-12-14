@@ -46,10 +46,10 @@ def api_user():
             }
             return jsonify(error), 500
 
-    except Exception:
+    except Error as err:
         error = {
             "error": True,
-            "message": "註冊失敗"
+            "message": err
         }
         return jsonify(error), 500
 
