@@ -7,7 +7,6 @@ var options = {
 };
 var observer = new IntersectionObserver(handleIntersect, options);
 
-
 let model = {
     dataResult: null,
     checkLogin: function () {
@@ -139,22 +138,6 @@ let view = {
         }
     }
 
-    // renderNextPage: function () {
-    //     let observer = new IntersectionObserver(view.handleIntersect, options);
-    //     observer.observe(document.getElementsByClassName("footer")[0]);
-    // },
-
-    // cancelNextPage: function () {
-    //     let observer = new IntersectionObserver(view.handleIntersect, options);
-    //     observer.unobserve(document.getElementsByClassName("footer")[0]);
-    // },
-
-    // handleIntersect: function (entries) {
-    //     if (entries[0].isIntersecting) {
-    //         getData();
-    //     }
-    // }
-
 };
 
 let contorller = {
@@ -165,15 +148,14 @@ let contorller = {
         view.renderCategories(model.dataResult);
         // view.renderNextPage();
     },
-
     getData: async function () {
         await model.getData();
         view.renderAttractions(model.dataResult);
     }
-
 };
 
 contorller.init();
+
 
 observer.observe(document.getElementsByClassName("footer")[0]);
 
@@ -351,6 +333,82 @@ function showDialog() {
 function closeDialog() {
     dialogOutside.style.display = "none";
 }
+
+// function getData() {
+//     var inputAttraction = document.getElementById("inputAttraction").value;
+//     fetch("/api/attractions?keyword=" + inputAttraction + "&page=" + page)
+//         .then(function (response) {
+//             response.json()
+//                 .then(function (data) {
+//                     if (data.nextPage === null) {
+//                         page = 0;
+//                         observer.unobserve(document.getElementsByClassName("footer")[0]);
+//                         let dataLength = data.data.length;
+//                         for (let i = 0; i < dataLength; i++) {
+//                             let attractions = document.createElement("a");
+//                             attractions.setAttribute("href", " http://172.20.10.2:3000/attraction/" + data.data[i].id);
+//                             document.getElementById("flex-container2").appendChild(attractions).setAttribute("class", "flexbox2");
+
+//                             let img = document.createElement("img");
+//                             img.src = data.data[i].images[0];
+//                             attractions.appendChild(img).setAttribute("class", "flexbox-image");
+
+//                             let attractionsData = document.createElement("div");
+//                             attractions.appendChild(attractionsData).setAttribute("class", "attractionsBottom");
+
+//                             let attractionsBottomMRT = document.createElement("div");
+//                             attractionsBottomMRT.textContent = data.data[i].mrt;
+//                             attractionsData.appendChild(attractionsBottomMRT).setAttribute("class", "attractionsBottomMRT");
+
+//                             let attractionsBottomCAT = document.createElement("div");
+//                             attractionsBottomCAT.textContent = data.data[i].category;
+//                             attractionsData.appendChild(attractionsBottomCAT).setAttribute("class", "attractionsBottomCAT");
+
+//                             let attractionsMiddle = document.createElement("div");
+//                             attractions.appendChild(attractionsMiddle).setAttribute("class", "attractionsMiddle");
+
+//                             let attractionsMiddleText = document.createElement("div");
+//                             attractionsMiddleText.textContent = data.data[i].name;
+//                             attractionsMiddle.appendChild(attractionsMiddleText).setAttribute("class", "attractionsMiddleText");
+//                         }
+//                     }
+
+//                     else if (data.nextPage !== null) {
+//                         let dataLength = data.data.length;
+//                         for (let i = 0; i < dataLength; i++) {
+
+//                             let attractions = document.createElement("a");
+//                             attractions.setAttribute("href", " http://172.20.10.2:3000/attraction/" + data.data[i].id);
+//                             document.getElementById("flex-container2").appendChild(attractions).setAttribute("class", "flexbox2");
+
+//                             let img = document.createElement("img");
+//                             img.src = data.data[i].images[0];
+//                             attractions.appendChild(img).setAttribute("class", "flexbox-image");
+
+//                             let attractionsData = document.createElement("div");
+//                             attractions.appendChild(attractionsData).setAttribute("class", "attractionsBottom");
+
+//                             let attractionsBottomMRT = document.createElement("div");
+//                             attractionsBottomMRT.textContent = data.data[i].mrt;
+//                             attractionsData.appendChild(attractionsBottomMRT).setAttribute("class", "attractionsBottomMRT");
+
+//                             let attractionsBottomCAT = document.createElement("div");
+//                             attractionsBottomCAT.textContent = data.data[i].category;
+//                             attractionsData.appendChild(attractionsBottomCAT).setAttribute("class", "attractionsBottomCAT");
+
+
+//                             let attractionsMiddle = document.createElement("div");
+//                             attractions.appendChild(attractionsMiddle).setAttribute("class", "attractionsMiddle");
+
+//                             let attractionsMiddleText = document.createElement("div");
+//                             attractionsMiddleText.textContent = data.data[i].name;
+//                             attractionsMiddle.appendChild(attractionsMiddleText).setAttribute("class", "attractionsMiddleText");
+//                         }
+//                         page = data.nextPage;
+//                     }
+//                 })
+//         })
+// }
 
 document.getElementById("taipei101Button").addEventListener("click", function () {
     page = 0;
