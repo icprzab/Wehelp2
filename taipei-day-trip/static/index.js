@@ -5,7 +5,7 @@ var options = {
     rootMargin: "0px 0px 0px 0px",
     threshold: 0.5
 };
-var observer = new IntersectionObserver(handleIntersect, options);
+
 var windowBackground = document.getElementById("windowBackground");
 var windowOutside = document.getElementById("windowOutside");
 var windowPage = document.getElementById("windowPage");
@@ -332,17 +332,22 @@ let view = {
         observer.unobserve(document.getElementsByClassName("footer")[0]);
         document.getElementById("flex-container2").innerHTML = "";
         observer.observe(document.getElementsByClassName("footer")[0]);
+    },
+
+    handleIntersect: function (entries) {
+        if (entries[0].isIntersecting) {
+            contorller.getData();
+        }
     }
 };
-
 
 let contorller = {
     init: async function () {
         await model.checkLogin();
         await view.renderCheckLogin(model.dataCheckLogin);
         await model.categories();
-        view.renderCategories(model.dataCategories);
-        // view.renderNextPage();
+        await view.renderCategories(model.dataCategories);
+        observer.observe(document.getElementsByClassName("footer")[0]);
     },
     getData: async function () {
         await model.getData();
@@ -395,18 +400,11 @@ let contorller = {
     searchAttractions: function () {
         view.renderSearchAttractions();
     },
-
 };
 
 contorller.init();
+var observer = new IntersectionObserver(view.handleIntersect, options);
 
-observer.observe(document.getElementsByClassName("footer")[0]);
-
-function handleIntersect(entries) {
-    if (entries[0].isIntersecting) {
-        contorller.getData();
-    }
-};
 
 
 
