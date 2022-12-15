@@ -16,20 +16,21 @@
             <div class="windowPage" id="windowPage">
                 <div class="window-inside">
                     <div class="window-inside-top"></div>
-                    <button class="window-inside-closebutton" onclick="closeWindow()">
+                    <button class="window-inside-closebutton" onclick="contorller.closeWindow()">
                         <img src="../static/icon_close.png" /></button>
                     <div class="window-inside-text-member" id="memberText">登入會員帳號</div>
                     <input class="window-inside-input-name" placeholder="輸入姓名" id="inputName" />
                     <input class="window-inside-input" placeholder="輸入電子信箱" id="inputEmail" />
                     <input class="window-inside-input" placeholder="輸入密碼" id="inputPassword" type="password" />
-                    <button class="window-inside-signup" id="signup" onclick="signupButton()">註冊新帳號</button>
-                    <button class="window-inside-login" id="login" onclick="loginButton()">登入帳號</button>
+                    <button class="window-inside-signup" id="signup" onclick="contorller.signupButton()">註冊新帳號</button>
+                    <button class="window-inside-login" id="login" onclick="contorller.loginButton()">登入帳號</button>
                     <div class="window-inside-email-repeat" id="emailRepeat">email已經註冊帳戶</div>
                     <div class="window-inside-signup-success" id="signupSuccess">註冊成功，請登入系統</div>
                     <div class="window-inside-signup-fail" id="signupFail">註冊失敗</div>
                     <div class="window-inside-login-fail" id="loginFail">電子郵件或密碼錯誤</div>
-                    <button class="window-inside-text-signup" onclick="signupPage()" id="signupText">還沒有帳戶？點此註冊</button>
-                    <button class="window-inside-text-signin" onclick="signinPage()"
+                    <button class="window-inside-text-signup" onclick="contorller.signupPage()"
+                        id="signupText">還沒有帳戶？點此註冊</button>
+                    <button class="window-inside-text-signin" onclick="contorller.signinPage()"
                         id="signinText">已經有帳戶了？點此登入</button>
                 </div>
             </div>
@@ -46,10 +47,10 @@
                         <div class="sectionTopBooking">
                             預定行程
                         </div>
-                        <button class="sectionTopLogin" onclick="showWindow()" id="sectionTopLogin">
+                        <button class="sectionTopLogin" onclick="contorller.showWindow()" id="sectionTopLogin">
                             登入/註冊
                         </button>
-                        <button class="sectionTopLogout" onclick="logoutButton()" id="sectionTopLogout">
+                        <button class="sectionTopLogout" onclick="contorller.logoutButton()" id="sectionTopLogout">
                             登出系統
                         </button>
                     </div>
@@ -58,10 +59,10 @@
             <div class="attraction">
                 <div class="attraction-width">
                     <div class="attraction-image" id="attraction-image">
-                        <button class="attraction-button-left" id="buttonLeft" onclick="plusSlides(-1)">
+                        <button class="attraction-button-left" id="buttonLeft" onclick="contorller.plusSlides(-1)">
                             <img src="../static/btn_leftArrow.png" />
                         </button>
-                        <button class="attraction-button-right" id="buttonRight" onclick="plusSlides(1)">
+                        <button class="attraction-button-right" id="buttonRight" onclick="contorller.plusSlides(1)">
                             <img src="../static/btn_rightArrow.png" /></button>
                         <div class="attraction-dot-outside" id="attraction-dot-outside">
                         </div>
@@ -77,10 +78,10 @@
                             </div>
                             <div class="attraction-booking4">
                                 <div class="attraction-booking4-date1">選擇時間：</div>
-                                <button class="attraction-booking4-button1" onclick="first()"
+                                <button class="attraction-booking4-button1" onclick="contorller.first()"
                                     id="attraction-booking4-button1"></button>
                                 <div class="attraction-booking4-date2">上半天</div>
-                                <button class="attraction-booking4-button2" onclick="second()"
+                                <button class="attraction-booking4-button2" onclick="contorller.second()"
                                     id="attraction-booking4-button2"></button>
                                 <div class="attraction-booking4-date2">下半天</div>
                             </div>

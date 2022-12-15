@@ -52,7 +52,6 @@ let model = {
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
                 this.dataCategories = data;
             });
     },
@@ -64,7 +63,6 @@ let model = {
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
                 this.dataGetData = data;
             });
     },
@@ -116,17 +114,16 @@ let model = {
     },
 
     logoutButton: function () {
-        fetch("/api/user/auth", {
+        return fetch("/api/user/auth", {
             method: "DELETE"
         })
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
                 this.dataLogoutButton = data;
             });
-    }
+    },
 }
 
 
