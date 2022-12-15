@@ -93,10 +93,10 @@ def api_user_auth_put():
             }
             encoded_jwt = jwt.encode(payload, "secret", algorithm="HS256")
             data_login = {"ok": True}
-            myResponse = jsonify(data_login)
-            myResponse.set_cookie("encoded_jwt", encoded_jwt,
-                                  expires=datetime.utcnow() + timedelta(days=7))
-            return myResponse
+            myResponse_login = jsonify(data_login)
+            myResponse_login.set_cookie("encoded_jwt", encoded_jwt,
+                                        expires=datetime.utcnow() + timedelta(days=7))
+            return myResponse_login
 
         else:
             error = {
@@ -115,10 +115,18 @@ def api_user_auth_put():
 
 @user_api.route("/api/user/auth", methods=["DELETE"])
 def api_user_auth_delete():
-    data_logout = {"ok": True}
-    myResponse = jsonify(data_logout)
-    myResponse.set_cookie("encoded_jwt", value="", expires=0)
-    return myResponse
+    try:
+        data_logout = {"ok": True}
+        myResponse_logout = jsonify(data_logout)
+        myResponse_logout.set_cookie("encoded_jwt", value="", expires=0)
+        return myResponse_logout
+
+    except Exception:
+        error = {
+            "error": True,
+            "message": "登出失敗"
+        }
+        return jsonify(error), 500
 
 
 @user_api.route("/booking")
