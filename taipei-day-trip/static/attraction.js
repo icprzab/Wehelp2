@@ -97,7 +97,7 @@ function signinPage() {
     signupFail.style.display = "none";
 }
 
-function singupButton() {
+function signupButton() {
     let inputSignup = {
         "name": inputName.value,
         "email": inputEmail.value,
