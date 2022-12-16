@@ -25,7 +25,7 @@ def api_user():
                     res_input_name, res_input_email, res_input_password)
                 if account_info == True:
                     data_signup = {"ok": True}
-                    return jsonify(data_signup)
+                    return jsonify(data_signup), 200
                 else:
                     error = {
                         "error": True,

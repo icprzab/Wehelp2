@@ -30,6 +30,7 @@ let model = {
     dataSignupButton: null,
     dataLogoutButton: null,
     dataGetData: null,
+    responseStatus: null,
     init: function () {
         return fetch(
             "/api/user/auth", {
@@ -59,6 +60,7 @@ let model = {
             }
         })
             .then((response) => {
+                this.responseStatus = response.status;
                 return response.json();
             })
             .then((data) => {
@@ -137,6 +139,10 @@ let view = {
         inputPassword.value = "";
         windowBackground.style.display = "none";
         windowOutside.style.display = "none";
+        signupSuccess.style.display = "none";
+        emailRepeat.style.display = "none";
+        loginFail.style.display = "none";
+        signupFail.style.display = "none";
     },
 
     renderSignupPage: function () {
@@ -174,7 +180,7 @@ let view = {
     },
 
     renderSignupButton: function (data) {
-        if (data.ok == true) {
+        if (data == 200) {
             windowPage.style.height = "360px";
             signupSuccess.style.display = "flex";
             emailRepeat.style.display = "none";
@@ -182,7 +188,7 @@ let view = {
             signupFail.style.display = "none";
         }
 
-        if (response.status == 400) {
+        if (data == 400) {
             windowPage.style.height = "360px";
             signupSuccess.style.display = "none";
             emailRepeat.style.display = "flex";
@@ -190,7 +196,7 @@ let view = {
             signupFail.style.display = "none";
         }
 
-        if (response.status == 500) {
+        if (data == 500) {
             windowPage.style.height = "360px";
             signupSuccess.style.display = "none";
             emailRepeat.style.display = "none";
@@ -307,7 +313,7 @@ let view = {
         slides[slideIndex - 1].style.display = "flex";
         document.getElementById("dot1").style.backgroundColor = "";
         dots[slideIndex - 1].className += " active";
-    }
+    },
 };
 
 
@@ -338,7 +344,7 @@ let contorller = {
 
     signupButton: async function () {
         await model.signupButton();
-        view.renderSignupButton(model.dataSignupButton);
+        view.renderSignupButton(model.responseStatus);
     },
 
     loginButton: async function () {

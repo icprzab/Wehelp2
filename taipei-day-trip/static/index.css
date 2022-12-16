@@ -17,6 +17,7 @@ body {
 
 @media (max-width:1920px) {
     .taipei-day-trip {
+        width: 100vw;
         position: relative;
         display: flex;
         justify-content: center;
@@ -74,6 +75,7 @@ body {
         background-color: white;
         left: calc(100% - 35px);
         top: 27px;
+        cursor: pointer;
     }
 
 
@@ -120,6 +122,7 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
     }
 
     .window-inside-email-repeat {
@@ -185,6 +188,7 @@ body {
         font-family: "Noto Sans TC";
         font-size: 19px;
         font-weight: 400;
+        cursor: pointer;
     }
 
     .window-inside-text-signup {
@@ -198,6 +202,7 @@ body {
         font-size: 16px;
         font-weight: 500;
         color: #666666;
+        cursor: pointer;
     }
 
     .window-inside-text-signin {
@@ -211,6 +216,7 @@ body {
         font-size: 16px;
         font-weight: 500;
         color: #666666;
+        cursor: pointer;
     }
 
     .taipei101-input-outside {
@@ -265,13 +271,19 @@ body {
         font-weight: 500;
         line-height: 20.27px;
         font-size: 14px;
+        cursor: pointer;
+    }
+
+    .closeDialog {
+        position: absolute;
+        z-index: 5;
+        width: 100vw;
     }
 
     .sectionTop-Outside {
         position: absolute;
         z-index: 0;
     }
-
 
     .sectionTop {
         display: flex;
@@ -292,6 +304,10 @@ body {
         line-height: 34px;
         font-weight: bold;
         color: #448899;
+        cursor: pointer;
+        border-width: 0px;
+        padding: 0px;
+        background-color: white;
     }
 
     .sectionTop-2 {
@@ -327,6 +343,7 @@ body {
         background-color: white;
         border: 0px;
         padding: 0px;
+        cursor: pointer;
     }
 
     .sectionTopLogout {
@@ -342,6 +359,7 @@ body {
         background-color: white;
         border: 0px;
         padding: 0px;
+        cursor: pointer;
     }
 
     .taipei101 {
@@ -366,6 +384,7 @@ body {
         line-height: 24px;
         margin-top: 85px;
         font-weight: 700;
+        user-select: none;
     }
 
     .taipei101-text-2 {
@@ -375,6 +394,7 @@ body {
         line-height: 13.3px;
         margin-top: 15px;
         font-weight: 700;
+        user-select: none;
     }
 
     .taipei101-input-button {
@@ -413,6 +433,7 @@ body {
         border: 0px;
         background-color: #448899;
         border-radius: 0px 5px 5px 0px;
+        cursor: pointer;
     }
 
     .taipei101-image {

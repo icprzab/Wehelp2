@@ -42,8 +42,8 @@
                 <div class="taipei101-input-button">
                     <input class="taipei101-input" type="text" id="inputAttraction" placeholder="輸入景點名稱查詢"
                         onclick="contorller.showDialog()"></input>
-                    <button class="taipei101-button" id="taipei101Button" onclick="contorller.searchAttractions()"><img
-                            src="../static/icon_search.png" /></button>
+                    <button type="reset" class="taipei101-button" id="taipei101Button"
+                        onclick="contorller.searchAttractions()"><img src="../static/icon_search.png" /></button>
                 </div>
                 <div class="taipei101-input-category">
                     <div id="dialogOutside" class="dialogOutside">
@@ -53,13 +53,14 @@
                 </div>
             </div>
         </div>
-        <div class="sectionTop-Outside" onclick="contorller.closeDialog()">
+        <!-- <div class="closeDialog" onclick="contorller.closeDialog()"></div> -->
+        <!-- <div class="sectionTop-Outside" onclick="contorller.closeDialog()"> -->
+        <div class="sectionTop-Outside">
             <div class="sectionTop">
                 <div class="sectionTop-space-between">
-                    <div class="sectionTop-1">
+                    <button class="sectionTop-1" onclick="contorller.refreshPage()" id="sectionTop1">
                         台北一日遊
-                    </div>
-
+                    </button>
                     <div class="sectionTop-2">
                         <div class="sectionTopBooking">
                             預定行程
@@ -90,6 +91,7 @@
             <footer class="footer">COPYRIGHT © 2022 台北一日遊</footer>
         </div>
     </div>
+
 </body>
 
 <script src="../static/index.js" type="text/javascript"></script>

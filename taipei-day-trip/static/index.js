@@ -23,14 +23,19 @@ var loginFail = document.getElementById("loginFail");
 var signupFail = document.getElementById("signupFail");
 var dialog = document.getElementById("dialog");
 var dialogOutside = document.getElementById("dialogOutside");
+var inputAttraction = document.getElementById("inputAttraction");
+var taipei101Button = document.getElementById("taipei101Button");
+var clickDialog = 0;
+var body = document.querySelector("body");
 
 let model = {
     dataCheckLogin: null,
     dataCategories: null,
-    dataGetData: null,
+    dataGetAttractions: null,
     dataLoginButton: null,
     dataSignupButton: null,
     dataLogoutButton: null,
+    responseStatus: null,
     checkLogin: function () {
         return fetch(
             "/api/user/auth", {
@@ -56,14 +61,14 @@ let model = {
             });
     },
 
-    getData: function () {
-        var inputAttraction = document.getElementById("inputAttraction").value;
-        return fetch("/api/attractions?keyword=" + inputAttraction + "&page=" + page)
+    getAttractions: function () {
+        let inputAttractionValue = inputAttraction.value;
+        return fetch("/api/attractions?keyword=" + inputAttractionValue + "&page=" + page)
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
-                this.dataGetData = data;
+                this.dataGetAttractions = data;
             });
     },
 
@@ -106,6 +111,7 @@ let model = {
             }
         })
             .then((response) => {
+                this.responseStatus = response.status;
                 return response.json();
             })
             .then((data) => {
@@ -148,7 +154,7 @@ let view = {
         }
     },
 
-    renderAttractions: function (data) {
+    renderGetAttractions: function (data) {
         if (data.nextPage === null) {
             page = 0;
             observer.unobserve(document.getElementsByClassName("footer")[0]);
@@ -180,6 +186,7 @@ let view = {
                 attractionsMiddleText.textContent = data.data[i].name;
                 attractionsMiddle.appendChild(attractionsMiddleText).setAttribute("class", "attractionsMiddleText");
             }
+            inputAttraction.value = "";
         }
 
         else if (data.nextPage !== null) {
@@ -214,21 +221,14 @@ let view = {
                 attractionsMiddle.appendChild(attractionsMiddleText).setAttribute("class", "attractionsMiddleText");
             }
             page = data.nextPage;
+            inputAttraction.value = "";
         }
     },
 
     renderInputCategory: function (data) {
-        var input = document.getElementById("inputAttraction");
-        input.value = data;
+        inputAttraction.value = data;
     },
 
-    renderShowDialog: function () {
-        dialogOutside.style.display = "flex";
-    },
-
-    renderCloseDialog: function () {
-        dialogOutside.style.display = "none";
-    },
 
     renderShowWindow: function () {
         windowBackground.style.display = "flex";
@@ -242,6 +242,10 @@ let view = {
         inputPassword.value = "";
         windowBackground.style.display = "none";
         windowOutside.style.display = "none";
+        signupSuccess.style.display = "none";
+        emailRepeat.style.display = "none";
+        loginFail.style.display = "none";
+        signupFail.style.display = "none";
         observer.observe(document.getElementsByClassName("footer")[0]);
     },
 
@@ -294,7 +298,7 @@ let view = {
     },
 
     renderSignupButton: function (data) {
-        if (data.ok == true) {
+        if (data == 200) {
             windowPage.style.height = "360px";
             signupSuccess.style.display = "flex";
             emailRepeat.style.display = "none";
@@ -302,7 +306,7 @@ let view = {
             signupFail.style.display = "none";
         }
 
-        if (response.status == 400) {
+        if (data == 400) {
             windowPage.style.height = "360px";
             signupSuccess.style.display = "none";
             emailRepeat.style.display = "flex";
@@ -310,7 +314,7 @@ let view = {
             signupFail.style.display = "none";
         }
 
-        if (response.status == 500) {
+        if (data == 500) {
             windowPage.style.height = "360px";
             signupSuccess.style.display = "none";
             emailRepeat.style.display = "none";
@@ -336,9 +340,33 @@ let view = {
 
     handleIntersect: function (entries) {
         if (entries[0].isIntersecting) {
-            contorller.getData();
+            contorller.getAttractions();
+        }
+    },
+
+    renderRefreshPage: function () {
+        location.reload(true);
+    },
+
+    renderShowDialog: function () {
+        body.removeEventListener("click", contorller.closeDialog);
+        dialogOutside.style.display = "flex";
+        body.addEventListener("click", contorller.closeDialog);
+    },
+
+    renderCloseDialog: function (e) {
+        clickDialog = 1;
+        console.log(clickDialog);
+        if (clickDialog = 1) {
+            if (!dialogOutside.contains(e.target) && !taipei101Button.contains(e.target) && !inputAttraction.contains(e.target)) {
+                dialogOutside.style.display = "none";
+                body.removeEventListener("click", contorller.closeDialog);
+                clickDialog = 0;
+                inputAttraction.value = "";
+            }
         }
     }
+
 };
 
 let contorller = {
@@ -349,21 +377,21 @@ let contorller = {
         await view.renderCategories(model.dataCategories);
         observer.observe(document.getElementsByClassName("footer")[0]);
     },
-    getData: async function () {
-        await model.getData();
-        view.renderAttractions(model.dataGetData);
+    getAttractions: async function () {
+        await model.getAttractions();
+        view.renderGetAttractions(model.dataGetAttractions);
     },
 
     inputCategory: function (data) {
         view.renderInputCategory(data);
     },
 
-    showDialog: function () {
-        view.renderShowDialog();
+    showDialog: function (data) {
+        view.renderShowDialog(data);
     },
 
-    closeDialog: function () {
-        view.renderCloseDialog();
+    closeDialog: function (data) {
+        view.renderCloseDialog(data);
     },
 
     showWindow: function () {
@@ -389,7 +417,7 @@ let contorller = {
 
     signupButton: async function () {
         await model.signupButton();
-        view.renderSignupButton(model.dataSignupButton);
+        view.renderSignupButton(model.responseStatus);
     },
 
     logoutButton: async function () {
@@ -400,12 +428,12 @@ let contorller = {
     searchAttractions: function () {
         view.renderSearchAttractions();
     },
+
+    refreshPage: function () {
+        view.renderRefreshPage();
+    },
 };
 
 contorller.init();
 var observer = new IntersectionObserver(view.handleIntersect, options);
-
-
-
-
 
