@@ -356,7 +356,6 @@ let view = {
 
     renderCloseDialog: function (e) {
         clickDialog = 1;
-        console.log(clickDialog);
         if (clickDialog = 1) {
             if (!dialogOutside.contains(e.target) && !taipei101Button.contains(e.target) && !inputAttraction.contains(e.target)) {
                 dialogOutside.style.display = "none";
