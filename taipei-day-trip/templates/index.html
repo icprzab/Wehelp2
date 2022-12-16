@@ -6,18 +6,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wehelp</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='index.css')}}">
+    <link rel="stylesheet" href="../static/index.css">
 </head>
 
 <body>
+
     <div class="taipei-day-trip">
-        <div class="dialog-outside">
-            <div class="dialog-width">
+        <div class="windowBackground" id="windowBackground"></div>
+        <div class="windowOutside" id="windowOutside">
+            <div class="windowPage" id="windowPage">
+                <div class="window-inside">
+                    <div class="window-inside-top"></div>
+                    <button class="window-inside-closebutton" onclick="contorller.closeWindow()">
+                        <img src="../static/icon_close.png" /></button>
+                    <div class="window-inside-text-member" id="memberText">登入會員帳號</div>
+                    <input class="window-inside-input-name" placeholder="輸入姓名" id="inputName" />
+                    <input class="window-inside-input" placeholder="輸入電子信箱" id="inputEmail" />
+                    <input class="window-inside-input" placeholder="輸入密碼" id="inputPassword" type="password" />
+                    <button class="window-inside-signup" id="signup" onclick="contorller.signupButton()">註冊新帳號</button>
+                    <button class="window-inside-login" id="login" onclick="contorller.loginButton()">登入帳號</button>
+                    <div class="window-inside-email-repeat" id="emailRepeat">email已經註冊帳戶</div>
+                    <div class="window-inside-signup-success" id="signupSuccess">註冊成功，請登入系統</div>
+                    <div class="window-inside-signup-fail" id="signupFail">註冊失敗</div>
+                    <div class="window-inside-login-fail" id="loginFail">電子郵件或密碼錯誤</div>
+                    <button class="window-inside-text-signup" onclick="contorller.signupPage()"
+                        id="signupText">還沒有帳戶？點此註冊</button>
+                    <button class="window-inside-text-signin" onclick="contorller.signinPage()"
+                        id="signinText">已經有帳戶了？點此登入</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="taipei101-input-outside">
+            <div class="taipei101-input-width">
                 <div class="taipei101-input-button">
-                    <input class="taipei101-input" type="text" id="inputAttraction" type="text" placeholder="輸入景點名稱查詢"
-                        onclick="showDialog()"></input>
-                    <button class="taipei101-button" id="taipei101Button"><img
-                            src="../static/icon_search.png" /></button>
+                    <input class="taipei101-input" type="text" id="inputAttraction" placeholder="輸入景點名稱查詢"
+                        onclick="contorller.showDialog()"></input>
+                    <button type="reset" class="taipei101-button" id="taipei101Button"
+                        onclick="contorller.searchAttractions()"><img src="../static/icon_search.png" /></button>
                 </div>
                 <div class="taipei101-input-category">
                     <div id="dialogOutside" class="dialogOutside">
@@ -27,25 +53,30 @@
                 </div>
             </div>
         </div>
-        <div class="sectionTop-Outside" onclick="closeDialog()">
+        <!-- <div class="closeDialog" onclick="contorller.closeDialog()"></div> -->
+        <!-- <div class="sectionTop-Outside" onclick="contorller.closeDialog()"> -->
+        <div class="sectionTop-Outside">
             <div class="sectionTop">
                 <div class="sectionTop-space-between">
-                    <div class="sectionTop-1">
+                    <button class="sectionTop-1" onclick="contorller.refreshPage()" id="sectionTop1">
                         台北一日遊
-                    </div>
-
+                    </button>
                     <div class="sectionTop-2">
-                        <div class="sectionTop-2-1">
+                        <div class="sectionTopBooking">
                             預定行程
                         </div>
-                        <div class="sectionTop-2-1">
+                        <button class="sectionTopLogin" onclick="contorller.showWindow()" id="sectionTopLogin">
                             登入/註冊
-                        </div>
+                        </button>
+                        <button class="sectionTopLogout" onclick="contorller.logoutButton()" id="sectionTopLogout">
+                            登出系統
+                        </button>
+
                     </div>
                 </div>
             </div>
 
-            <div class="taipei101">
+            <div class=" taipei101">
                 <div class="taipei101-text">
                     <div class="taipei101-text-1">輕鬆享受台北一日悠閒</div>
                     <div class="taipei101-text-2">探索每個角落，體驗城市的深度旅遊行程</div>
@@ -60,8 +91,9 @@
             <footer class="footer">COPYRIGHT © 2022 台北一日遊</footer>
         </div>
     </div>
+
 </body>
 
-<script src="{{url_for('static',filename='index.js')}}" type="text/javascript"></script>
+<script src="../static/index.js" type="text/javascript"></script>
 
 </html>
