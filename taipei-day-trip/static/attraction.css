@@ -270,6 +270,7 @@ body {
         background-color: white;
         border: 0px;
         padding: 0px;
+        cursor: pointer;
     }
 
     .sectionTopLogin {
@@ -427,8 +428,6 @@ body {
             opacity: 1
         }
     }
-
-
 
     .attraction-right {
         width: 600px;
@@ -606,6 +605,23 @@ body {
         font-weight: 400;
         font-size: 19px;
         border-radius: 5px;
+    }
+
+
+    .separator-top-outside {
+        display: flex;
+        justify-content: center;
+        background-color: white;
+        width: 100vw;
+    }
+
+    .separator-top {
+        margin-top: 0px;
+        height: 1px;
+        background-color: #E8E8E8;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
     }
 
 

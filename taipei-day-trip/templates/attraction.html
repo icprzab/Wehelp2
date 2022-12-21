@@ -44,9 +44,9 @@
                     </a>
 
                     <div class="sectionTop-2">
-                        <div class="sectionTopBooking">
+                        <button class="sectionTopBooking" onclick="contorller.returnBooking()">
                             預定行程
-                        </div>
+                        </button>
                         <button class="sectionTopLogin" onclick="contorller.showWindow()" id="sectionTopLogin">
                             登入/註冊
                         </button>
@@ -55,6 +55,9 @@
                         </button>
                     </div>
                 </div>
+            </div>
+            <div class="separator-top-outside">
+                <div class="separator-top"></div>
             </div>
             <div class="attraction">
                 <div class="attraction-width">
@@ -74,7 +77,7 @@
                             <div class="attraction-booking2">以此景點為中心的一日行程，帶您探索城市角落故事</div>
                             <div class="attraction-booking3">
                                 <div class="attraction-booking3-date1">選擇日期：</div>
-                                <input class="attraction-booking3-date2" type="date" />
+                                <input class="attraction-booking3-date2" type="date" id="attraction-booking-date" />
                             </div>
                             <div class="attraction-booking4">
                                 <div class="attraction-booking4-date1">選擇時間：</div>
@@ -89,7 +92,8 @@
                                 <div class="attraction-booking5-fee1">導覽費用：</div>
                                 <div class="attraction-booking5-fee2" id="attraction-booking5-fee2">新台幣 2000 元</div>
                             </div>
-                            <div class="attraction-booking6"> <button class="attraction-booking6-button">開始預約行程</button>
+                            <div class="attraction-booking6"> <button class="attraction-booking6-button"
+                                    onclick="contorller.bookingButtonCheck()">開始預約行程</button>
                             </div>
                         </div>
                     </div>
