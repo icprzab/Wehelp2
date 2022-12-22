@@ -80,7 +80,7 @@ let model = {
 let view = {
     renderInit: function (data) {
         if (data === null) {
-            location.replace('http://172.20.10.2:3000/');
+            location.replace('http://54.248.52.136:3000/');
         }
         if (data !== null) {
             let bookingName = document.getElementById("booking-name");
@@ -121,7 +121,7 @@ let view = {
 
     renderLogoutButton: function (data) {
         if (data.ok == true) {
-            location.replace('http://172.20.10.2:3000/');
+            location.replace('http://54.248.52.136:3000/');
         }
         else {
             location.reload(true);

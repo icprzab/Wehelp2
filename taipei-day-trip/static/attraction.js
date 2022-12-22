@@ -380,7 +380,7 @@ let view = {
 
     renderReturnBooking: function (data) {
         if (data !== null) {
-            location.replace('http://172.20.10.2:3000/booking');
+            location.replace('http://54.248.52.136:3000/booking');
         }
         if (data === null) {
             contorller.showWindow();
@@ -399,7 +399,7 @@ let view = {
     renderBookingButton: function (data) {
         if (date.value !== "") {
             if (data.ok == true) {
-                location.replace('http://172.20.10.2:3000/booking');
+                location.replace('http://54.248.52.136:3000/booking');
             }
             else {
                 location.reload(true);

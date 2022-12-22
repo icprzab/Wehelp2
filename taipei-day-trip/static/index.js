@@ -175,7 +175,7 @@ let view = {
             let dataLength = data.data.length;
             for (let i = 0; i < dataLength; i++) {
                 let attractions = document.createElement("a");
-                attractions.setAttribute("href", " http://172.20.10.2:3000/attraction/" + data.data[i].id);
+                attractions.setAttribute("href", " http://54.248.52.136:3000/attraction/" + data.data[i].id);
                 document.getElementById("flex-container2").appendChild(attractions).setAttribute("class", "flexbox2");
 
                 let img = document.createElement("img");
@@ -208,7 +208,7 @@ let view = {
             for (let i = 0; i < dataLength; i++) {
 
                 let attractions = document.createElement("a");
-                attractions.setAttribute("href", " http://172.20.10.2:3000/attraction/" + data.data[i].id);
+                attractions.setAttribute("href", " http://54.248.52.136:3000/attraction/" + data.data[i].id);
                 document.getElementById("flex-container2").appendChild(attractions).setAttribute("class", "flexbox2");
 
                 let img = document.createElement("img");
@@ -382,7 +382,7 @@ let view = {
 
     renderReturnBooking: function (data) {
         if (data !== null) {
-            location.replace('http://172.20.10.2:3000/booking');
+            location.replace('http://54.248.52.136:3000/booking');
         }
         if (data === null) {
             contorller.showWindow();
@@ -464,40 +464,3 @@ let contorller = {
 
 contorller.init();
 var observer = new IntersectionObserver(view.handleIntersect, options);
-
-// function showDialog() {
-//     body.removeEventListener("click", closeDialog);
-//     dialogOutside.style.display = "flex";
-//     body.addEventListener("click", closeDialog);
-// }
-
-// function closeDialog(e) {
-//     clickDialog = 1;
-//     if (clickDialog = 1) {
-//         if (!dialogOutside.contains(e.target) && !taipei101Button.contains(e.target) && !inputAttraction.contains(e.target)) {
-//             dialogOutside.style.display = "none";
-//             body.removeEventListener("click", closeDialog);
-//             clickDialog = 0;
-//             inputAttraction.value = "";
-//         }
-//     }
-// }
-
-
-// function showDialog() {
-//     body.removeEventListener("click", closeDialog);
-//     dialogOutside.style.display = "flex";
-//     body.addEventListener("click", closeDialog);
-// }
-
-// function closeDialog(e) {
-//     clickDialog = 1;
-//     if (clickDialog = 1) {
-//         if (!dialogOutside.contains(e.target) && !taipei101Button.contains(e.target) && !inputAttraction.contains(e.target)) {
-//             dialogOutside.style.display = "none";
-//             body.removeEventListener("click", closeDialog);
-//             clickDialog = 0;
-//             inputAttraction.value = "";
-//         }
-//     }
-// }
