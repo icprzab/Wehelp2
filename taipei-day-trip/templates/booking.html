@@ -15,7 +15,7 @@
         <div class="sectionTop-Outside">
             <div class="sectionTop">
                 <div class="sectionTop-space-between">
-                    <a class="sectionTop-1" href="http://54.248.52.136:3000/">
+                    <a class="sectionTop-1" href="http://172.20.10.2:3000/">
                         台北一日遊
                     </a>
 
@@ -86,7 +86,8 @@
                                 <input class="contact-input"></input>
                             </div>
                             <div class="contact-info">手機號碼：
-                                <input class="contact-input"></input>
+                                <input class="contact-input" onkeypress="contorller.isInputNumber(event)"
+                                    maxlength="15"></input>
                             </div>
                             <div class="contact-bottom">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
                         </div>
@@ -101,13 +102,16 @@
                         <div class="contact2-inside">
                             <div class="contact2-top">信用卡付款資訊</div>
                             <div class="contact2-info">卡片號碼：
-                                <input class="contact2-input"></input>
+                                <input id="credit-card-number" class="contact2-input" type="text" maxlength="19"
+                                    onkeypress="contorller.blankSpace()|| contorller.isInputNumber(event)"></input>
                             </div>
                             <div class="contact2-info">過期時間：
-                                <input class="contact2-input"></input>
+                                <input id="credit-card-date" class="contact2-input" maxlength="7"
+                                    onkeypress="contorller.slash() || contorller.isInputNumber(event)"></input>
                             </div>
                             <div class="contact2-info">驗證密碼：
-                                <input class="contact2-input"></input>
+                                <input class="contact2-input" placeholder="CVV"
+                                    onkeypress="contorller.isInputNumber(event)" maxlength="8"></input>
                             </div>
                         </div>
                     </div>

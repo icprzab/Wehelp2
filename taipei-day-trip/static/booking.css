@@ -488,14 +488,14 @@ body {
     }
 
     .contact-input {
-        width: 192px;
-        height: 32px;
+        width: 186px;
+        height: 34px;
         border-radius: 5px;
         font-family: "Noto Sans TC";
         color: black;
         font-size: 16px;
         font-weight: 500;
-        padding-left: 0px 0px 0px 10px;
+        padding: 0px 0px 0px 10px;
     }
 
 
@@ -543,14 +543,21 @@ body {
     }
 
     .contact2-input {
-        width: 192px;
-        height: 32px;
+        width: 186px;
+        height: 34px;
         border-radius: 5px;
         font-family: "Noto Sans TC";
         color: black;
         font-size: 16px;
         font-weight: 500;
-        padding-left: 0px 0px 0px 10px;
+        padding: 0px 0px 0px 10px;
+    }
+
+    ::placeholder {
+        font-family: "Noto Sans TC";
+        color: #666666;
+        font-size: 16px;
+        font-weight: 500;
     }
 
 
@@ -809,14 +816,14 @@ body {
     }
 
     .contact-input {
-        width: 192px;
-        height: 32px;
+        width: 186px;
+        height: 34px;
         border-radius: 5px;
         font-family: "Noto Sans TC";
         color: black;
         font-size: 16px;
         font-weight: 500;
-        padding-left: 0px 0px 0px 10px;
+        padding: 0px 0px 0px 10px;
     }
 
 
@@ -864,14 +871,14 @@ body {
     }
 
     .contact2-input {
-        width: 192px;
-        height: 32px;
+        width: 186px;
+        height: 34px;
         border-radius: 5px;
         font-family: "Noto Sans TC";
         color: black;
         font-size: 16px;
         font-weight: 500;
-        padding-left: 0px 0px 0px 10px;
+        padding: 0px 0px 0px 10px;
     }
 
 
@@ -1138,14 +1145,14 @@ body {
     }
 
     .contact-input {
-        width: 192px;
-        height: 32px;
+        width: 186px;
+        height: 34px;
         border-radius: 5px;
         font-family: "Noto Sans TC";
         color: black;
         font-size: 16px;
         font-weight: 500;
-        padding-left: 0px 10px 0px 10px;
+        padding: 0px 0px 0px 10px;
     }
 
 
@@ -1193,14 +1200,14 @@ body {
     }
 
     .contact2-input {
-        width: 192px;
-        height: 32px;
+        width: 186px;
+        height: 34px;
         border-radius: 5px;
         font-family: "Noto Sans TC";
         color: black;
         font-size: 16px;
         font-weight: 500;
-        padding-left: 0px 0px 0px 10px;
+        padding: 0px 0px 0px 10px;
     }
 
 
@@ -1469,14 +1476,14 @@ body {
     }
 
     .contact-input {
-        width: 192px;
-        height: 32px;
+        width: 186px;
+        height: 34px;
         border-radius: 5px;
         font-family: "Noto Sans TC";
         color: black;
         font-size: 16px;
         font-weight: 500;
-        padding-left: 0px 10px 0px 10px;
+        padding: 0px 0px 0px 10px;
     }
 
 
@@ -1524,14 +1531,14 @@ body {
     }
 
     .contact2-input {
-        width: 192px;
-        height: 32px;
+        width: 186px;
+        height: 34px;
         border-radius: 5px;
         font-family: "Noto Sans TC";
         color: black;
         font-size: 16px;
         font-weight: 500;
-        padding-left: 0px 0px 0px 10px;
+        padding: 0px 0px 0px 10px;
     }
 
 

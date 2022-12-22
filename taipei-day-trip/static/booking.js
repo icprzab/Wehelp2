@@ -16,6 +16,7 @@ var bookingInfo = document.getElementById("booking-info");
 var bookingContent = document.getElementById("booking-content");
 var bookingContentOutside = document.getElementById("booking-content-outside");
 var footer = document.getElementById("footer");
+var i = 0;
 
 let model = {
     dataJWT: null,
@@ -79,7 +80,7 @@ let model = {
 let view = {
     renderInit: function (data) {
         if (data === null) {
-            location.replace('http://54.248.52.136:3000/');
+            location.replace('http://172.20.10.2:3000/');
         }
         if (data !== null) {
             let bookingName = document.getElementById("booking-name");
@@ -120,7 +121,7 @@ let view = {
 
     renderLogoutButton: function (data) {
         if (data.ok == true) {
-            location.replace('http://54.248.52.136:3000/');
+            location.replace('http://172.20.10.2:3000/');
         }
         else {
             location.reload(true);
@@ -138,6 +139,33 @@ let view = {
 
     renderBookingPage: function () {
         location.reload(true);
+    },
+
+    renderBlankSpace: function () {
+        let creditCardNumber = document.getElementById("credit-card-number").value;
+        if (creditCardNumber.length == 4 || creditCardNumber.length == 9 || creditCardNumber.length == 14) {
+            document.getElementById("credit-card-number").value = creditCardNumber + " ";
+        }
+    },
+
+    renderIsInputNumber: function (evt) {
+        var ch = String.fromCharCode(evt.which);
+        if (!(/[0-9]/.test(ch))) {
+            evt.preventDefault();
+        }
+    },
+
+    renderSlash: function () {
+        let creditCarDate = document.getElementById("credit-card-date").value;
+        if (creditCarDate.length == 2) {
+            document.getElementById("credit-card-date").value = creditCarDate + " / ";
+        }
+        if (creditCarDate.length == 3) {
+            document.getElementById("credit-card-date").value = creditCarDate + "/ ";
+        }
+        if (creditCarDate.length == 4) {
+            document.getElementById("credit-card-date").value = creditCarDate + " ";
+        }
     },
 
 
@@ -164,17 +192,23 @@ let contorller = {
         view.renderDeleteBooking(model.dataDeleteBooking);
     },
 
-    bookingPage: async function () {
+    bookingPage: function () {
         view.renderBookingPage();
+    },
+
+    blankSpace: function () {
+        view.renderBlankSpace();
+    },
+
+
+    isInputNumber: function (evt) {
+        view.renderIsInputNumber(evt);
+    },
+
+    slash: function () {
+        view.renderSlash();
     },
 
 }
 contorller.init();
-
-
-
-
-
-
-
 
