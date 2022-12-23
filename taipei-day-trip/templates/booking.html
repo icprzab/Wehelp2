@@ -103,11 +103,13 @@
                             <div class="contact2-top">信用卡付款資訊</div>
                             <div class="contact2-info">卡片號碼：
                                 <input id="credit-card-number" class="contact2-input" type="text" maxlength="19"
-                                    onkeypress="contorller.blankSpace()|| contorller.isInputNumber(event)"></input>
+                                    onkeypress="contorller.blankSpace()|| contorller.isInputNumber(event)"
+                                    placeholder="**** **** **** ****"></input>
                             </div>
                             <div class="contact2-info">過期時間：
                                 <input id="credit-card-date" class="contact2-input" maxlength="7"
-                                    onkeypress="contorller.slash() || contorller.isInputNumber(event)"></input>
+                                    onkeypress="contorller.slash() || contorller.isInputNumber(event)"
+                                    placeholder="MM / YY"></input>
                             </div>
                             <div class="contact2-info">驗證密碼：
                                 <input class="contact2-input" placeholder="CVV"
