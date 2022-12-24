@@ -80,4 +80,47 @@ class Information:
             myresult_categories = mycursor.fetchall()
             return myresult_categories
         except:
-            return None
+            return False
+
+    def update_booking(attractionId, bookingDate, time, price, email):
+        try:
+            mycursor = db.cursor()
+            query_update_booking = "UPDATE member SET attractionId= %s, bookingDate= %s, time= %s, price=%s WHERE email= %s;"
+            mycursor.execute(query_update_booking,
+                             (attractionId, bookingDate, time, price, email,))
+            db.commit()
+            return True
+        except:
+            return False
+
+    def search_booking(email):
+        try:
+            mycursor = db.cursor()
+            query_search_booking = "SELECT attractionID, bookingDate, time, price from member WHERE email = %s"
+            mycursor.execute(query_search_booking, (email,))
+            myresult_booking = mycursor.fetchone()
+            return myresult_booking
+        except:
+            return False
+
+    def search_booking_attraction(id):
+        try:
+            mycursor = db.cursor()
+            query_search_booking_attraction = "SELECT id, name, address, images from attractions WHERE id = %s"
+            mycursor.execute(query_search_booking_attraction,
+                             (id,))
+            myresult_booking_attraction = mycursor.fetchone()
+            return myresult_booking_attraction
+        except:
+            return False
+
+    def delete_booking(email):
+        try:
+            mycursor = db.cursor()
+            query_update_booking = "UPDATE member SET attractionID=null, bookingDate=null, time=null, price=null WHERE email= %s;"
+            mycursor.execute(query_update_booking,
+                             (email,))
+            db.commit()
+            return True
+        except:
+            return False

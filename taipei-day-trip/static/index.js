@@ -36,6 +36,7 @@ let model = {
     dataSignupButton: null,
     dataLogoutButton: null,
     responseStatus: null,
+    dataReturnBooking: null,
     checkLogin: function () {
         return fetch(
             "/api/user/auth", {
@@ -128,6 +129,19 @@ let model = {
             })
             .then((data) => {
                 this.dataLogoutButton = data;
+            });
+    },
+
+    returnBooking: function () {
+        return fetch(
+            "/api/user/auth", {
+            method: "GET"
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                this.dataReturnBooking = data.data;
             });
     },
 }
@@ -364,6 +378,15 @@ let view = {
                 inputAttraction.value = "";
             }
         }
+    },
+
+    renderReturnBooking: function (data) {
+        if (data !== null) {
+            location.replace('http://54.248.52.136:3000/booking');
+        }
+        if (data === null) {
+            contorller.showWindow();
+        }
     }
 
 };
@@ -431,8 +454,13 @@ let contorller = {
     refreshPage: function () {
         view.renderRefreshPage();
     },
+
+    returnBooking: async function () {
+        await model.returnBooking();
+        view.renderReturnBooking(model.dataReturnBooking);
+    },
+
 };
 
 contorller.init();
 var observer = new IntersectionObserver(view.handleIntersect, options);
-

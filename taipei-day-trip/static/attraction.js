@@ -24,6 +24,10 @@ var text = document.getElementById("attraction-booking5-fee2");
 var button1 = document.getElementById("attraction-booking4-button1");
 var button2 = document.getElementById("attraction-booking4-button2");
 var slideIndex = 1;
+var price = "新台幣 2000 元";
+var time = "上半天";
+var date = document.getElementById("attraction-booking-date");
+
 
 let model = {
     dataJWT: null,
@@ -31,6 +35,9 @@ let model = {
     dataLogoutButton: null,
     dataGetData: null,
     responseStatus: null,
+    dataReturnBooking: null,
+    dataBookingButton: null,
+    dataBookingButtonCheck: null,
     init: function () {
         return fetch(
             "/api/user/auth", {
@@ -109,6 +116,58 @@ let model = {
             })
             .then((data) => {
                 this.dataGetData = data;
+            });
+    },
+
+    returnBooking: function () {
+        return fetch(
+            "/api/user/auth", {
+            method: "GET"
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                this.dataReturnBooking = data.data;
+            });
+    },
+
+    bookingButtonCheck: function () {
+        return fetch(
+            "/api/user/auth", {
+            method: "GET"
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                this.dataBookingButtonCheck = data.data;
+            });
+    },
+
+
+    bookingButton: function () {
+        let inputBooking = {
+            "attractionID": id,
+            "bookingDate": date.value,
+            "time": time,
+            "price": price,
+        }
+        return fetch("/api/booking", {
+            method: "POST",
+            credentials: "include",
+            body: JSON.stringify(inputBooking),
+            cache: "no-cache",
+            headers: {
+                "content-type": "application/json"
+            }
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                this.dataBookingButton = data;
+
             });
     },
 
@@ -229,12 +288,16 @@ let view = {
     },
 
     renderFirst: function () {
+        price = "新台幣 2000 元";
+        time = "上半天";
         text.innerHTML = "新台幣 2000 元";
         button1.style.backgroundColor = "#448899";
         button2.style.backgroundColor = "white";
     },
 
     renderSecond: function () {
+        price = "新台幣 2500 元";
+        time = "下半天";
         text.innerHTML = "新台幣 2500 元";
         button1.style.backgroundColor = "white";
         button2.style.backgroundColor = "#448899";
@@ -314,6 +377,40 @@ let view = {
         document.getElementById("dot1").style.backgroundColor = "";
         dots[slideIndex - 1].className += " active";
     },
+
+    renderReturnBooking: function (data) {
+        if (data !== null) {
+            location.replace('http://54.248.52.136:3000/booking');
+        }
+        if (data === null) {
+            contorller.showWindow();
+        }
+    },
+
+    bookingButtonCheck: function (data) {
+        if (data !== null) {
+            contorller.bookingButton();
+        }
+        if (data === null) {
+            contorller.showWindow();
+        }
+    },
+
+    renderBookingButton: function (data) {
+        if (date.value !== "") {
+            if (data.ok == true) {
+                location.replace('http://54.248.52.136:3000/booking');
+            }
+            else {
+                location.reload(true);
+            }
+        }
+        else {
+            onclick = null;
+        }
+    },
+
+
 };
 
 
@@ -377,8 +474,35 @@ let contorller = {
         view.renderShowSlides(data);
     },
 
+    returnBooking: async function () {
+        await model.returnBooking();
+        view.renderReturnBooking(model.dataReturnBooking);
+    },
+
+    bookingButton: async function () {
+        await model.bookingButton();
+        view.renderBookingButton(model.dataBookingButton);
+    },
+
+    bookingButtonCheck: async function () {
+        await model.bookingButtonCheck();
+        view.bookingButtonCheck(model.dataBookingButtonCheck);
+    },
+
+
+
+
 }
 contorller.init();
+
+
+
+
+
+
+
+
+
 
 
 
