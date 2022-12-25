@@ -234,18 +234,19 @@ var fields = {
     }
 }
 
-TPDirect.card.setup({
-    fields: fields,
-    // 此設定會顯示卡號輸入正確後，會顯示前六後四碼信用卡卡號
-    isMaskCreditCardNumber: true,
-    maskCreditCardNumberRange: {
-        beginIndex: 6,
-        endIndex: 11
-    }
-})
+// TPDirect.card.setup({
+//     fields: fields,
+//     // 此設定會顯示卡號輸入正確後，會顯示前六後四碼信用卡卡號
+//     isMaskCreditCardNumber: true,
+//     maskCreditCardNumberRange: {
+//         beginIndex: 6,
+//         endIndex: 11
+//     }
+// })
 
 
 TPDirect.card.onUpdate(function (update) {
+    console.log(update.canGetPrime)
     // update.canGetPrime === true
     // --> you can call TPDirect.card.getPrime()
     if (update.canGetPrime) {
