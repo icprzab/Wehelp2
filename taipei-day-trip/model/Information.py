@@ -5,7 +5,7 @@ import jwt
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    passwd="rootroot",
+    passwd="root",
     database="taipei_day_trip"
 )
 

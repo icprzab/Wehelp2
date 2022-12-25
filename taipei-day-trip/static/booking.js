@@ -74,19 +74,22 @@ let model = {
             });
     },
 
-
 }
 
 let view = {
     renderInit: function (data) {
         if (data === null) {
-            location.replace('http://54.248.52.136:3000/');
+            location.replace('http://172.20.10.2:3000/');
         }
         if (data !== null) {
             let bookingName = document.getElementById("booking-name");
             bookingName.innerHTML = "您好，" + data.name + "，待預訂的行程如下：";
             contorller.bookingInfo();
         }
+    },
+
+    renderFrontPage: function () {
+        location.replace('http://172.20.10.2:3000/');
     },
 
     renderBookingInfo: function (data, responseStatus) {
@@ -121,7 +124,7 @@ let view = {
 
     renderLogoutButton: function (data) {
         if (data.ok == true) {
-            location.replace('http://54.248.52.136:3000/');
+            location.replace('http://172.20.10.2:3000/');
         }
         else {
             location.reload(true);
@@ -149,7 +152,8 @@ let view = {
     },
 
     renderIsInputNumber: function (evt) {
-        var ch = String.fromCharCode(evt.which);
+        var x = evt.which || evt.keyCode;
+        var ch = String.fromCharCode(x);
         if (!(/[0-9]/.test(ch))) {
             evt.preventDefault();
         }
@@ -168,13 +172,16 @@ let view = {
         }
     },
 
-
 };
 
 let contorller = {
     init: async function () {
         await model.init();
         view.renderInit(model.dataJWT);
+    },
+
+    frontPage: function () {
+        view.renderFrontPage();
     },
 
     bookingInfo: async function () {
@@ -200,7 +207,6 @@ let contorller = {
         view.renderBlankSpace();
     },
 
-
     isInputNumber: function (evt) {
         view.renderIsInputNumber(evt);
     },
@@ -208,7 +214,104 @@ let contorller = {
     slash: function () {
         view.renderSlash();
     },
-
 }
 contorller.init();
 
+
+
+
+TPDirect.setupSDK(APP_ID, 'APP_KEY', 'sandbox')
+
+var fields = {
+    number: {
+        element: 4242424242424242,
+    },
+    expirationDate: {
+        element: 01 / 23,
+    },
+    ccv: {
+        element: 123,
+    }
+}
+
+TPDirect.card.setup({
+    fields: fields,
+    // 此設定會顯示卡號輸入正確後，會顯示前六後四碼信用卡卡號
+    isMaskCreditCardNumber: true,
+    maskCreditCardNumberRange: {
+        beginIndex: 6,
+        endIndex: 11
+    }
+})
+
+
+TPDirect.card.onUpdate(function (update) {
+    // update.canGetPrime === true
+    // --> you can call TPDirect.card.getPrime()
+    if (update.canGetPrime) {
+        // Enable submit Button to get prime.
+        // submitButton.removeAttribute('disabled')
+    } else {
+        // Disable submit Button to get prime.
+        // submitButton.setAttribute('disabled', true)
+    }
+
+    // cardTypes = ['mastercard', 'visa', 'jcb', 'amex', 'unknown']
+    if (update.cardType === 'visa') {
+        // Handle card type visa.
+    }
+
+    // number 欄位是錯誤的
+    if (update.status.number === 2) {
+        // setNumberFormGroupToError()
+    } else if (update.status.number === 0) {
+        // setNumberFormGroupToSuccess()
+    } else {
+        // setNumberFormGroupToNormal()
+    }
+
+    if (update.status.expiry === 2) {
+        // setNumberFormGroupToError()
+    } else if (update.status.expiry === 0) {
+        // setNumberFormGroupToSuccess()
+    } else {
+        // setNumberFormGroupToNormal()
+    }
+
+    if (update.status.ccv === 2) {
+        // setNumberFormGroupToError()
+    } else if (update.status.ccv === 0) {
+        // setNumberFormGroupToSuccess()
+    } else {
+        // setNumberFormGroupToNormal()
+    }
+})
+
+
+// TPDirect.card.getTappayFieldsStatus()
+
+// call TPDirect.card.getPrime when user submit form to get tappay prime
+// $('form').on('submit', onSubmit)
+
+function onSubmit(event) {
+    event.preventDefault()
+    // 取得 TapPay Fields 的 status
+    const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+
+    // 確認是否可以 getPrime
+    if (tappayStatus.canGetPrime === false) {
+        console.log('can not get prime')
+        return
+    }
+
+    // Get prime
+    TPDirect.card.getPrime((result) => {
+        if (result.status !== 0) {
+            console.log('get prime error ' + result.msg)
+
+        }
+        console.log('get prime 成功，prime: ' + result.card.prime)
+        // send prime to your server, to pay with Pay by Prime API .
+        // Pay By Prime Docs: https://docs.tappaysdk.com/tutorial/zh/back.html#pay-by-prime-api
+    })
+}
