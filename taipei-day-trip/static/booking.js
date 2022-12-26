@@ -17,6 +17,9 @@ var bookingContent = document.getElementById("booking-content");
 var bookingContentOutside = document.getElementById("booking-content-outside");
 var footer = document.getElementById("footer");
 var i = 0;
+var creditCardNumber = document.getElementById("credit-card-number");
+var creditCardDate = document.getElementById("credit-card-date");
+var creditCardCCV = document.getElementById("credit-card-ccv");
 
 let model = {
     dataJWT: null,
@@ -215,104 +218,63 @@ let contorller = {
         view.renderSlash();
     },
 }
+
 contorller.init();
 
-
-
-
-TPDirect.setupSDK(APP_ID, 'APP_KEY', 'sandbox')
+TPDirect.setupSDK(11327, 'app_whdEWBH8e8Lzy4N6BysVRRMILYORF6UxXbiOFsICkz0J9j1C0JUlCHv1tVJC', 'sandbox')
 
 var fields = {
     number: {
-        element: 4242424242424242,
+        element: '#credit-card-number',
+        placeholder: '**** **** **** ****'
     },
     expirationDate: {
-        element: 01 / 23,
+        element: document.getElementById('credit-card-date'),
     },
     ccv: {
-        element: 123,
+        element: '#credit-card-ccv',
     }
 }
 
-// TPDirect.card.setup({
-//     fields: fields,
-//     // 此設定會顯示卡號輸入正確後，會顯示前六後四碼信用卡卡號
-//     isMaskCreditCardNumber: true,
-//     maskCreditCardNumberRange: {
-//         beginIndex: 6,
-//         endIndex: 11
-//     }
-// })
-
-
-TPDirect.card.onUpdate(function (update) {
-    console.log(update.canGetPrime)
-    // update.canGetPrime === true
-    // --> you can call TPDirect.card.getPrime()
-    if (update.canGetPrime) {
-        // Enable submit Button to get prime.
-        // submitButton.removeAttribute('disabled')
-    } else {
-        // Disable submit Button to get prime.
-        // submitButton.setAttribute('disabled', true)
-    }
-
-    // cardTypes = ['mastercard', 'visa', 'jcb', 'amex', 'unknown']
-    if (update.cardType === 'visa') {
-        // Handle card type visa.
-    }
-
-    // number 欄位是錯誤的
-    if (update.status.number === 2) {
-        // setNumberFormGroupToError()
-    } else if (update.status.number === 0) {
-        // setNumberFormGroupToSuccess()
-    } else {
-        // setNumberFormGroupToNormal()
-    }
-
-    if (update.status.expiry === 2) {
-        // setNumberFormGroupToError()
-    } else if (update.status.expiry === 0) {
-        // setNumberFormGroupToSuccess()
-    } else {
-        // setNumberFormGroupToNormal()
-    }
-
-    if (update.status.ccv === 2) {
-        // setNumberFormGroupToError()
-    } else if (update.status.ccv === 0) {
-        // setNumberFormGroupToSuccess()
-    } else {
-        // setNumberFormGroupToNormal()
+TPDirect.card.setup({
+    fields: fields,
+    isMaskCreditCardNumber: true,
+    maskCreditCardNumberRange: {
+        beginIndex: 6,
+        endIndex: 11
     }
 })
 
+TPDirect.card.onUpdate(function (update) {
+    console.log(update.canGetPrime)
+    if (update.canGetPrime) {
+    } else { }
+    if (update.cardType === 'visa') { }
+    if (update.status.number === 2) { }
+    else if (update.status.number === 0) { }
+    else { }
 
-// TPDirect.card.getTappayFieldsStatus()
+    if (update.status.expiry === 2) { }
+    else if (update.status.expiry === 0) { }
+    else { }
 
-// call TPDirect.card.getPrime when user submit form to get tappay prime
-// $('form').on('submit', onSubmit)
+    if (update.status.ccv === 2) { }
+    else if (update.status.ccv === 0) { }
+    else { }
+})
 
 function onSubmit(event) {
     event.preventDefault()
-    // 取得 TapPay Fields 的 status
     const tappayStatus = TPDirect.card.getTappayFieldsStatus()
-
-    // 確認是否可以 getPrime
+    console.log(tappayStatus)
     if (tappayStatus.canGetPrime === false) {
         console.log('can not get prime')
-        return
     }
-
-    // Get prime
     TPDirect.card.getPrime((result) => {
         if (result.status !== 0) {
-            console.log('get prime error ' + result.msg)
-
+            console.log('get prime error' + result.msg)
         }
         console.log('get prime 成功，prime: ' + result.card.prime)
-        // send prime to your server, to pay with Pay by Prime API .
-        // Pay By Prime Docs: https://docs.tappaysdk.com/tutorial/zh/back.html#pay-by-prime-api
     })
 }
+
