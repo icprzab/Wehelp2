@@ -27,6 +27,8 @@ let model = {
     dataLogoutButton: null,
     dataDeleteBooking: null,
     responseStatus: null,
+    dataOrder: null,
+    dataPrime: [],
     init: function () {
         return fetch(
             "/api/user/auth", {
@@ -77,6 +79,88 @@ let model = {
             });
     },
 
+    getPrime: function (event) {
+        event.preventDefault()
+        const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+        if (tappayStatus.canGetPrime === false) {
+            alert('can not get prime')
+            return
+        }
+
+        TPDirect.card.getPrime(async (result) => {
+            const res = await pay({
+                "prime": result.card.prime,
+            });
+        });
+
+        const pay = async (data) => {
+            console.log(data["prime"])
+            await this.dataPrime.push(data["prime"])
+            // console.log(data["prime"])
+        };
+    },
+
+    //     return TPDirect.card.getPrime(
+    //         (result) => {
+    //             if (result.status !== 0) {
+    //                 alert('get prime error ' + result.msg)
+    //                 return
+    //             }
+    //             console.log(result.card.prime)
+    //             return result.card.prime
+    //         }
+    //     )
+    //         .then((result) => {
+    //             console.log(result)
+    //         })
+    // },
+
+    passOrder: function () {
+        let contactName = document.getElementById("contact-name");
+        let contactEmail = document.getElementById("contact-email");
+        let contactPhone = document.getElementById("contact-phone");
+        console.log(this.dataPrime.length)
+        console.log(this.dataPrime)
+
+        let orderInfo = {
+            "prime": this.dataPrime[0],
+            "order": {
+                "price": this.dataBookingInfo["data"]["price"],
+                "trip": {
+                    "attraction": {
+                        "id": this.dataBookingInfo["data"]["attraction"]["id"],
+                        "name": this.dataBookingInfo["data"]["attraction"]["name"],
+                        "address": this.dataBookingInfo["data"]["attraction"]["address"],
+                        "image": this.dataBookingInfo["data"]["attraction"]["image"]
+                    },
+                    "date": this.dataBookingInfo["data"]["date"],
+                    "time": this.dataBookingInfo["data"]["time"]
+                },
+                "contact": {
+                    "name": contactName.value,
+                    "email": contactEmail.value,
+                    "phone": contactPhone.value
+                }
+            }
+        };
+
+        // console.log(orderInfo)
+        return fetch("/api/orders", {
+            method: "POST",
+            credentials: "include",
+            body: JSON.stringify(orderInfo),
+            cache: "no-cache",
+            headers: {
+                "content-type": "application/json"
+            }
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data)
+            });
+    },
 }
 
 let view = {
@@ -89,6 +173,97 @@ let view = {
             bookingName.innerHTML = "您好，" + data.name + "，待預訂的行程如下：";
             contorller.bookingInfo();
         }
+    },
+
+    renderTapPay: function () {
+
+        TPDirect.setupSDK(11327, 'app_whdEWBH8e8Lzy4N6BysVRRMILYORF6UxXbiOFsICkz0J9j1C0JUlCHv1tVJC', 'sandbox')
+
+        var fields = {
+            number: {
+                element: '#card-number',
+                placeholder: '**** **** **** ****'
+            },
+            expirationDate: {
+                element: document.getElementById('card-expiration-date'),
+                placeholder: 'MM / YY'
+            },
+            ccv: {
+                element: '#card-ccv',
+                placeholder: 'CVV'
+            }
+        }
+
+        TPDirect.card.setup({
+            fields: fields,
+            styles: {
+                'input': {
+                    'color': 'gray',
+                    'font-family': 'Noto Sans TC',
+                },
+                'input.ccv': {
+                    'font-size': '16px'
+                },
+                'input.expiration-date': {
+                    'font-size': '16px'
+                },
+                'input.card-number': {
+                    'font-size': '16px'
+                },
+                ':focus': {
+                    'color': 'black',
+                    'border-color': 'black',
+                    'border-width': '1.5px'
+                },
+                '.valid': {
+                    'color': 'green'
+                },
+                '.invalid': {
+                    'color': 'red'
+                },
+                '@media screen and (max-width: 400px)': {
+                    'input': {
+                        'color': 'black'
+                    }
+                }
+            },
+            isMaskCreditCardNumber: true,
+            maskCreditCardNumberRange: {
+                beginIndex: 6,
+                endIndex: 11
+            }
+        })
+
+        TPDirect.card.onUpdate(function (update) {
+            if (update.canGetPrime) {
+                submitButton.removeAttribute('disabled')
+            } else {
+                submitButton.setAttribute('disabled', true)
+            }
+            if (update.cardType === 'visa') {
+            }
+            if (update.status.number === 2) {
+                setNumberFormGroupToError()
+            } else if (update.status.number === 0) {
+                setNumberFormGroupToSuccess()
+            } else {
+                setNumberFormGroupToNormal()
+            }
+            if (update.status.expiry === 2) {
+                setNumberFormGroupToError()
+            } else if (update.status.expiry === 0) {
+                setNumberFormGroupToSuccess()
+            } else {
+                setNumberFormGroupToNormal()
+            }
+            if (update.status.ccv === 2) {
+                setNumberFormGroupToError()
+            } else if (update.status.ccv === 0) {
+                setNumberFormGroupToSuccess()
+            } else {
+                setNumberFormGroupToNormal()
+            }
+        })
     },
 
     renderFrontPage: function () {
@@ -110,7 +285,6 @@ let view = {
             img.src = data.data.attraction.image[0];
             image.appendChild(img).setAttribute("class", "imageInside");
         }
-
         if (responseStatus == 403) {
             bookingInfo.style.display = "none";
             bookingContentOutside.style.display = "none";
@@ -122,7 +296,6 @@ let view = {
             footer.style.marginTop = "40px"
             footer.style.padding = "45px 0px 0px 0px";
         }
-
     },
 
     renderLogoutButton: function (data) {
@@ -147,13 +320,6 @@ let view = {
         location.reload(true);
     },
 
-    renderBlankSpace: function () {
-        let creditCardNumber = document.getElementById("credit-card-number").value;
-        if (creditCardNumber.length == 4 || creditCardNumber.length == 9 || creditCardNumber.length == 14) {
-            document.getElementById("credit-card-number").value = creditCardNumber + " ";
-        }
-    },
-
     renderIsInputNumber: function (evt) {
         var x = evt.which || evt.keyCode;
         var ch = String.fromCharCode(x);
@@ -161,26 +327,13 @@ let view = {
             evt.preventDefault();
         }
     },
-
-    renderSlash: function () {
-        let creditCarDate = document.getElementById("credit-card-date").value;
-        if (creditCarDate.length == 2) {
-            document.getElementById("credit-card-date").value = creditCarDate + " / ";
-        }
-        if (creditCarDate.length == 3) {
-            document.getElementById("credit-card-date").value = creditCarDate + "/ ";
-        }
-        if (creditCarDate.length == 4) {
-            document.getElementById("credit-card-date").value = creditCarDate + " ";
-        }
-    },
-
 };
 
 let contorller = {
     init: async function () {
         await model.init();
-        view.renderInit(model.dataJWT);
+        await view.renderInit(model.dataJWT);
+        view.renderTapPay();
     },
 
     frontPage: function () {
@@ -206,75 +359,36 @@ let contorller = {
         view.renderBookingPage();
     },
 
-    blankSpace: function () {
-        view.renderBlankSpace();
-    },
-
     isInputNumber: function (evt) {
         view.renderIsInputNumber(evt);
     },
 
-    slash: function () {
-        view.renderSlash();
+    order: async function (event) {
+        await model.getPrime(event);
+        model.passOrder();
     },
+
 }
 
 contorller.init();
 
-TPDirect.setupSDK(11327, 'app_whdEWBH8e8Lzy4N6BysVRRMILYORF6UxXbiOFsICkz0J9j1C0JUlCHv1tVJC', 'sandbox')
 
-var fields = {
-    number: {
-        element: '#credit-card-number',
-        placeholder: '**** **** **** ****'
-    },
-    expirationDate: {
-        element: document.getElementById('credit-card-date'),
-    },
-    ccv: {
-        element: '#credit-card-ccv',
-    }
-}
 
-TPDirect.card.setup({
-    fields: fields,
-    isMaskCreditCardNumber: true,
-    maskCreditCardNumberRange: {
-        beginIndex: 6,
-        endIndex: 11
-    }
-})
+// getPrime: function (event) {
+//     event.preventDefault()
+//     const tappayStatus = TPDirect.card.getTappayFieldsStatus()
 
-TPDirect.card.onUpdate(function (update) {
-    console.log(update.canGetPrime)
-    if (update.canGetPrime) {
-    } else { }
-    if (update.cardType === 'visa') { }
-    if (update.status.number === 2) { }
-    else if (update.status.number === 0) { }
-    else { }
+//     if (tappayStatus.canGetPrime === false) {
+//         console.log('can not get prime')
+//     }
 
-    if (update.status.expiry === 2) { }
-    else if (update.status.expiry === 0) { }
-    else { }
+//     TPDirect.card.getPrime((result) => {
+//         if (result.status !== 0) {
+//             console.log('get prime error' + result.msg)
+//         }
+//         this.dataPrime = result.card.prime;
+//         console.log(this.dataPrime)
+//     })
 
-    if (update.status.ccv === 2) { }
-    else if (update.status.ccv === 0) { }
-    else { }
-})
-
-function onSubmit(event) {
-    event.preventDefault()
-    const tappayStatus = TPDirect.card.getTappayFieldsStatus()
-    console.log(tappayStatus)
-    if (tappayStatus.canGetPrime === false) {
-        console.log('can not get prime')
-    }
-    TPDirect.card.getPrime((result) => {
-        if (result.status !== 0) {
-            console.log('get prime error' + result.msg)
-        }
-        console.log('get prime 成功，prime: ' + result.card.prime)
-    })
-}
-
+//     console.log(this.dataPrime)
+// },

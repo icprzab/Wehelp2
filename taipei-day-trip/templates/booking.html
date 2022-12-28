@@ -11,7 +11,6 @@
 
 <body>
     <div class="taipei-day-trip">
-
         <div class="sectionTop-Outside">
             <div class="sectionTop">
                 <div class="sectionTop-space-between">
@@ -53,8 +52,8 @@
                                             <div class="booking-content-attraction-info">時間：
                                                 <div id="attraction-time"></div>
                                             </div>
-                                            <div class="booking-content-attraction-info">費用：
-                                                <div id="attraction-price"></div>
+                                            <div class="booking-content-attraction-info">費用：新台幣&thinsp;
+                                                <div id="attraction-price"></div>&thinsp;元
                                             </div>
                                             <div class="booking-content-attraction-info">地點：
                                                 <div id="attraction-address"></div>
@@ -79,19 +78,20 @@
                         <div class="contact-inside">
                             <div class="contact-top">您的聯絡資訊</div>
                             <div class="contact-info">聯絡姓名：
-                                <input class="contact-input"></input>
+                                <input class="contact-input" id="contact-name"></input>
                             </div>
                             <div class="contact-info">聯絡信箱：
-                                <input class="contact-input"></input>
+                                <input class="contact-input" id="contact-email"></input>
                             </div>
                             <div class="contact-info">手機號碼：
-                                <input class="contact-input" onkeypress="contorller.isInputNumber(event)"
-                                    maxlength="15"></input>
+                                <input class="contact-input" onkeypress="contorller.isInputNumber(event)" maxlength="15"
+                                    id="contact-phone"></input>
                             </div>
                             <div class="contact-bottom">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
                         </div>
                     </div>
                 </div>
+
                 <div class="separator-middle-outside">
                     <div class="separator-middle"></div>
                 </div>
@@ -101,38 +101,36 @@
                         <div class="contact2-inside">
                             <div class="contact2-top">信用卡付款資訊</div>
                             <div class="contact2-info">卡片號碼：
-                                <input id="credit-card-number" class="contact2-input" type="text" maxlength="19"
-                                    onkeypress="contorller.blankSpace()|| contorller.isInputNumber(event)">4242 4242
-                                4242 4242</input>
+                                <div class="tpfield" id="card-number"></div>
                             </div>
                             <div class="contact2-info">過期時間：
-                                <input id="credit-card-date" class="contact2-input" maxlength="7"
-                                    onkeypress="contorller.slash() || contorller.isInputNumber(event)">01 / 23</input>
+                                <div class="tpfield" id="card-expiration-date"></div>
                             </div>
                             <div class="contact2-info">驗證密碼：
-                                <input id="credit-card-ccv" class="contact2-input" placeholder="CVV"
-                                    onkeypress="contorller.isInputNumber(event)" maxlength="8">123</input>
+                                <div class="tpfield" id="card-ccv"></div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="separator-middle-outside">
                     <div class="separator-middle"></div>
                 </div>
+
                 <div class="payment-outside">
                     <div class="payment">
                         <div class="payment-inside">
                             <div class="payment-text">總價：<div id="total-price"></div>
                             </div>
-                            <button class="payment-button" onclick="onSubmit(event)">確認訂購並付款</button>
+                            <button class="payment-button" onclick="contorller.order(event)">確認訂購並付款</button>
                         </div>
                     </div>
                 </div>
             </div>
+
             <footer class="footer" id="footer">COPYRIGHT © 2022 台北一日遊</footer>
         </div>
     </div>
-
 </body>
 
 <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0" type="text/javascript"></script>

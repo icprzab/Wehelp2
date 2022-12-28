@@ -8,24 +8,7 @@ booking_api = Blueprint("booking_api", __name__)
 
 @booking_api.route("/booking")
 def booking():
-    # try:
-    #     decoded = request.cookies.get("encoded_jwt")
-    #     decoded_jwt = jwt.decode(decoded, "secret", algorithms="HS256")
-    #     data_undecoded = {"data": None}
-    #     if decoded != None:
-    #         if decoded_jwt != None:
     return render_template("booking.html")
-    #         else:
-    #             return jsonify(data_undecoded)
-
-    #     elif decoded == None:
-    #         return jsonify(data_undecoded)
-    # except Exception:
-    #     error = {
-    #         "error": True,
-    #         "message": "請按照情境提供對應的錯誤訊息"
-    #     }
-    #     return jsonify(error), 500
 
 
 @booking_api.route("/api/booking", methods=["GET"])
@@ -77,7 +60,6 @@ def api_booking_post():
                 res_booking_date = res_booking["bookingDate"]
                 res_booking_time = res_booking["time"]
                 res_booking_price = res_booking["price"]
-                print(res_booking)
                 update_booking = Information.update_booking(
                     res_booking_attractionID, res_booking_date, res_booking_time, res_booking_price, member_email)
                 if update_booking == True:

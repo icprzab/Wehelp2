@@ -124,3 +124,14 @@ class Information:
             return True
         except:
             return False
+
+    def insert_order(unpaid):
+        try:
+            mycursor = db.cursor()
+            query_insert_order = "INSERT INTO order(orderNumber,status) VALUES(%s,%s)"
+            mycursor.execute(query_insert_order,
+                             (unpaid,))
+            db.commit()
+
+        except:
+            return False

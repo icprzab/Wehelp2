@@ -427,6 +427,7 @@ body {
         color: #666666;
         font-size: 16px;
         font-weight: 700;
+        align-items: center;
     }
 
     .booking-info {
@@ -496,8 +497,14 @@ body {
         font-size: 16px;
         font-weight: 500;
         padding: 0px 0px 0px 10px;
+        border: 1px solid #E8E8E8;
+        outline: 0px;
     }
 
+    .contact-input:focus {
+        border-color: black;
+        border-width: 1.5px;
+    }
 
     .contact-bottom {
         font-family: "Noto Sans TC";
@@ -540,17 +547,33 @@ body {
         color: #666666;
         font-size: 16px;
         font-weight: 500;
+        display: flex;
+        align-items: center;
     }
 
-    .contact2-input {
-        width: 186px;
+    .tpfield {
         height: 34px;
+        width: 186px;
+        padding: 5px;
+        border: 1px solid #E8E8E8;
         border-radius: 5px;
         font-family: "Noto Sans TC";
-        color: black;
         font-size: 16px;
         font-weight: 500;
         padding: 0px 0px 0px 10px;
+        color: black;
+    }
+
+    .tappay-field-focus {
+        outline: 0;
+        border-color: black;
+        border-width: 1.5px;
+    }
+
+
+    .card-number invalid:focus {
+        border-color: black;
+        border-width: 1.5px;
     }
 
     ::placeholder {
@@ -759,6 +782,7 @@ body {
         color: #666666;
         font-size: 16px;
         font-weight: 700;
+        align-items: center;
     }
 
 
@@ -1088,6 +1112,7 @@ body {
         color: #666666;
         font-size: 16px;
         font-weight: 700;
+        align-items: center;
     }
 
 
@@ -1419,6 +1444,7 @@ body {
         color: #666666;
         font-size: 16px;
         font-weight: 700;
+        align-items: center;
     }
 
 

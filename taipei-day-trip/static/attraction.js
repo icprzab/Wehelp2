@@ -167,7 +167,6 @@ let model = {
             })
             .then((data) => {
                 this.dataBookingButton = data;
-
             });
     },
 
@@ -292,7 +291,7 @@ let view = {
     },
 
     renderFirst: function () {
-        price = "新台幣 2000 元";
+        price = 2000;
         time = "上半天";
         text.innerHTML = "新台幣 2000 元";
         button1.style.backgroundColor = "#448899";
@@ -300,7 +299,7 @@ let view = {
     },
 
     renderSecond: function () {
-        price = "新台幣 2500 元";
+        price = 2500;
         time = "下半天";
         text.innerHTML = "新台幣 2500 元";
         button1.style.backgroundColor = "white";
