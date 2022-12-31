@@ -1,11 +1,16 @@
 import mysql.connector
 from datetime import datetime, timedelta, time
-import jwt
+import os
+from dotenv import load_dotenv
+load_dotenv()
+sqluser = os.getenv("sqluser")
+sqlpasswd = os.getenv("sqlpasswd")
+
 
 db = mysql.connector.connect(
     host="localhost",
-    user="root",
-    passwd="root",
+    user=sqluser,
+    passwd=sqlpasswd,
     database="taipei_day_trip"
 )
 
@@ -125,13 +130,24 @@ class Information:
         except:
             return False
 
-    def insert_order(unpaid):
+    def insert_order(memberID, attractionName, attraction_date, attraction_time, price, order_number, unpaid):
         try:
             mycursor = db.cursor()
-            query_insert_order = "INSERT INTO order(orderNumber,status) VALUES(%s,%s)"
-            mycursor.execute(query_insert_order,
-                             (unpaid,))
+            query_insert_orders = "INSERT INTO orders(memberID, attractionName, date, time, price, orderNumber, status) VALUES(%s,%s,%s,%s,%s,%s,%s)"
+            mycursor.execute(query_insert_orders,
+                             (memberID, attractionName, attraction_date, attraction_time, price, order_number, unpaid,))
             db.commit()
+            return True
+        except:
+            return False
 
+    def update_order(paid, orderNumber):
+        try:
+            mycursor = db.cursor()
+            query_update_orders = "UPDATE orders SET status=%s WHERE orderNumber= %s"
+            mycursor.execute(query_update_orders,
+                             (paid, orderNumber,))
+            db.commit()
+            return True
         except:
             return False

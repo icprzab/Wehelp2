@@ -175,7 +175,7 @@ let view = {
             let dataLength = data.data.length;
             for (let i = 0; i < dataLength; i++) {
                 let attractions = document.createElement("a");
-                attractions.setAttribute("href", " http://172.20.10.2:3000/attraction/" + data.data[i].id);
+                attractions.setAttribute("href", " http://54.248.52.136:3000/attraction/" + data.data[i].id);
                 document.getElementById("flex-container2").appendChild(attractions).setAttribute("class", "flexbox2");
 
                 let img = document.createElement("img");
@@ -208,7 +208,7 @@ let view = {
             for (let i = 0; i < dataLength; i++) {
 
                 let attractions = document.createElement("a");
-                attractions.setAttribute("href", " http://172.20.10.2:3000/attraction/" + data.data[i].id);
+                attractions.setAttribute("href", " http://54.248.52.136:3000/attraction/" + data.data[i].id);
                 document.getElementById("flex-container2").appendChild(attractions).setAttribute("class", "flexbox2");
 
                 let img = document.createElement("img");
@@ -382,7 +382,7 @@ let view = {
 
     renderReturnBooking: function (data) {
         if (data !== null) {
-            location.replace('http://172.20.10.2:3000/booking');
+            location.replace("http://54.248.52.136:3000/booking");
         }
         if (data === null) {
             contorller.showWindow();

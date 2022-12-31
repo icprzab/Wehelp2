@@ -59,7 +59,7 @@ def api_booking_post():
                 res_booking_attractionID = res_booking["attractionID"]
                 res_booking_date = res_booking["bookingDate"]
                 res_booking_time = res_booking["time"]
-                res_booking_price = res_booking["price"]
+                res_booking_price = int(res_booking["price"])
                 update_booking = Information.update_booking(
                     res_booking_attractionID, res_booking_date, res_booking_time, res_booking_price, member_email)
                 if update_booking == True:

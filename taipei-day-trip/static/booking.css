@@ -610,13 +610,14 @@ body {
 
     .payment-text {
         display: flex;
+        align-items: center;
         justify-content: right;
         font-family: "Noto Sans TC";
         color: #666666;
         font-size: 16px;
         font-weight: 700;
-
     }
+
 
     .payment-button {
         width: 173px;

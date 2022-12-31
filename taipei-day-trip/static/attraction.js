@@ -24,7 +24,7 @@ var text = document.getElementById("attraction-booking5-fee2");
 var button1 = document.getElementById("attraction-booking4-button1");
 var button2 = document.getElementById("attraction-booking4-button2");
 var slideIndex = 1;
-var price = "新台幣 2000 元";
+var price = "2000";
 var time = "上半天";
 var date = document.getElementById("attraction-booking-date");
 
@@ -187,7 +187,7 @@ let view = {
     },
 
     renderFrontPage: function () {
-        location.replace('http://172.20.10.2:3000/');
+        location.replace("http://54.248.52.136:3000/");
     },
 
     renderShowWindow: function () {
@@ -383,7 +383,7 @@ let view = {
 
     renderReturnBooking: function (data) {
         if (data !== null) {
-            location.replace('http://172.20.10.2:3000/booking');
+            location.replace("http://54.248.52.136:3000/booking");
         }
         if (data === null) {
             contorller.showWindow();
@@ -402,7 +402,7 @@ let view = {
     renderBookingButton: function (data) {
         if (date.value !== "") {
             if (data.ok == true) {
-                location.replace('http://172.20.10.2:3000/booking');
+                location.replace("http://54.248.52.136:3000/booking");
             }
             else {
                 location.reload(true);

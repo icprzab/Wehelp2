@@ -28,7 +28,6 @@ let model = {
     dataDeleteBooking: null,
     responseStatus: null,
     dataOrder: null,
-    dataPrime: [],
     init: function () {
         return fetch(
             "/api/user/auth", {
@@ -83,7 +82,7 @@ let model = {
         event.preventDefault()
         const tappayStatus = TPDirect.card.getTappayFieldsStatus()
         if (tappayStatus.canGetPrime === false) {
-            alert('can not get prime')
+            console.log('can not get prime')
             return
         }
 
@@ -94,79 +93,64 @@ let model = {
         });
 
         const pay = async (data) => {
-            console.log(data["prime"])
-            await this.dataPrime.push(data["prime"])
-            // console.log(data["prime"])
-        };
-    },
-
-    //     return TPDirect.card.getPrime(
-    //         (result) => {
-    //             if (result.status !== 0) {
-    //                 alert('get prime error ' + result.msg)
-    //                 return
-    //             }
-    //             console.log(result.card.prime)
-    //             return result.card.prime
-    //         }
-    //     )
-    //         .then((result) => {
-    //             console.log(result)
-    //         })
-    // },
-
-    passOrder: function () {
-        let contactName = document.getElementById("contact-name");
-        let contactEmail = document.getElementById("contact-email");
-        let contactPhone = document.getElementById("contact-phone");
-        console.log(this.dataPrime.length)
-        console.log(this.dataPrime)
-
-        let orderInfo = {
-            "prime": this.dataPrime[0],
-            "order": {
-                "price": this.dataBookingInfo["data"]["price"],
-                "trip": {
-                    "attraction": {
-                        "id": this.dataBookingInfo["data"]["attraction"]["id"],
-                        "name": this.dataBookingInfo["data"]["attraction"]["name"],
-                        "address": this.dataBookingInfo["data"]["attraction"]["address"],
-                        "image": this.dataBookingInfo["data"]["attraction"]["image"]
+            console.log(data)
+            let contactName = document.getElementById("contact-name");
+            let contactEmail = document.getElementById("contact-email");
+            let contactPhone = document.getElementById("contact-phone");
+            let orderInfo = {
+                "prime": data["prime"],
+                "order": {
+                    "price": this.dataBookingInfo["data"]["price"],
+                    "trip": {
+                        "attraction": {
+                            "id": this.dataBookingInfo["data"]["attraction"]["id"],
+                            "name": this.dataBookingInfo["data"]["attraction"]["name"],
+                            "address": this.dataBookingInfo["data"]["attraction"]["address"],
+                            "image": this.dataBookingInfo["data"]["attraction"]["image"]
+                        },
+                        "date": this.dataBookingInfo["data"]["date"],
+                        "time": this.dataBookingInfo["data"]["time"]
                     },
-                    "date": this.dataBookingInfo["data"]["date"],
-                    "time": this.dataBookingInfo["data"]["time"]
-                },
-                "contact": {
-                    "name": contactName.value,
-                    "email": contactEmail.value,
-                    "phone": contactPhone.value
+                    "contact": {
+                        "name": contactName.value,
+                        "email": contactEmail.value,
+                        "phone": contactPhone.value
+                    }
                 }
-            }
-        };
+            };
 
-        // console.log(orderInfo)
-        return fetch("/api/orders", {
-            method: "POST",
-            credentials: "include",
-            body: JSON.stringify(orderInfo),
-            cache: "no-cache",
-            headers: {
-                "content-type": "application/json"
-            }
-        })
-            .then((response) => {
-                return response.json();
+            return fetch("/api/orders", {
+                method: "POST",
+                credentials: "include",
+                body: JSON.stringify(orderInfo),
+                cache: "no-cache",
+                headers: {
+                    "content-type": "application/json"
+                }
             })
-            .then((data) => {
-                console.log(data)
-            });
-    },
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    let orderNumber = data.number
+                    if (data.ok == true) {
+                        location.replace("http://54.248.52.136:3000/thankyou?number=" + orderNumber + "&paid=success");
+                    }
+
+                    if (data.ok == false) {
+                        location.replace("http://54.248.52.136:3000/thankyou?number=" + orderNumber + "&paid=fail");
+                    }
+
+
+                });
+        }
+    }
 }
 
 let view = {
     renderInit: function (data) {
         if (data === null) {
-            location.replace('http://172.20.10.2:3000/');
+            location.replace("http://54.248.52.136:3000/");
         }
         if (data !== null) {
             let bookingName = document.getElementById("booking-name");
@@ -177,7 +161,7 @@ let view = {
 
     renderTapPay: function () {
 
-        TPDirect.setupSDK(11327, 'app_whdEWBH8e8Lzy4N6BysVRRMILYORF6UxXbiOFsICkz0J9j1C0JUlCHv1tVJC', 'sandbox')
+        TPDirect.setupSDK(`${APP_ID}`, `${APP_KEY}`, 'sandbox')
 
         var fields = {
             number: {
@@ -233,41 +217,10 @@ let view = {
                 endIndex: 11
             }
         })
-
-        TPDirect.card.onUpdate(function (update) {
-            if (update.canGetPrime) {
-                submitButton.removeAttribute('disabled')
-            } else {
-                submitButton.setAttribute('disabled', true)
-            }
-            if (update.cardType === 'visa') {
-            }
-            if (update.status.number === 2) {
-                setNumberFormGroupToError()
-            } else if (update.status.number === 0) {
-                setNumberFormGroupToSuccess()
-            } else {
-                setNumberFormGroupToNormal()
-            }
-            if (update.status.expiry === 2) {
-                setNumberFormGroupToError()
-            } else if (update.status.expiry === 0) {
-                setNumberFormGroupToSuccess()
-            } else {
-                setNumberFormGroupToNormal()
-            }
-            if (update.status.ccv === 2) {
-                setNumberFormGroupToError()
-            } else if (update.status.ccv === 0) {
-                setNumberFormGroupToSuccess()
-            } else {
-                setNumberFormGroupToNormal()
-            }
-        })
     },
 
     renderFrontPage: function () {
-        location.replace('http://172.20.10.2:3000/');
+        location.replace("http://54.248.52.136:3000/");
     },
 
     renderBookingInfo: function (data, responseStatus) {
@@ -300,7 +253,7 @@ let view = {
 
     renderLogoutButton: function (data) {
         if (data.ok == true) {
-            location.replace('http://172.20.10.2:3000/');
+            location.replace("http://54.248.52.136:3000/");
         }
         else {
             location.reload(true);
@@ -363,9 +316,8 @@ let contorller = {
         view.renderIsInputNumber(evt);
     },
 
-    order: async function (event) {
-        await model.getPrime(event);
-        model.passOrder();
+    order: function (event) {
+        model.getPrime(event);
     },
 
 }
@@ -373,22 +325,3 @@ let contorller = {
 contorller.init();
 
 
-
-// getPrime: function (event) {
-//     event.preventDefault()
-//     const tappayStatus = TPDirect.card.getTappayFieldsStatus()
-
-//     if (tappayStatus.canGetPrime === false) {
-//         console.log('can not get prime')
-//     }
-
-//     TPDirect.card.getPrime((result) => {
-//         if (result.status !== 0) {
-//             console.log('get prime error' + result.msg)
-//         }
-//         this.dataPrime = result.card.prime;
-//         console.log(this.dataPrime)
-//     })
-
-//     console.log(this.dataPrime)
-// },

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wehelp</title>
+    <link rel="stylesheet" href="../static/thankyou.css">
+</head>
+
+<body>
+    <div class="taipei-day-trip">
+        <div class="sectionTop-Outside">
+            <div class="sectionTop">
+                <div class="sectionTop-space-between">
+                    <button class="sectionTop-1" onclick="contorller.frontPage()">
+                        台北一日遊
+                    </button>
+
+                    <div class="sectionTop-2">
+                        <button class="sectionTopBooking" onclick="contorller.bookingPage()">
+                            預定行程
+                        </button>
+                        <button class="sectionTopLogout" onclick="contorller.logoutButton()" id="sectionTopLogout">
+                            登出系統
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="separator-top-outside">
+                <div class="separator-top"></div>
+            </div>
+
+
+            <div class="order">
+                <div class="order-success" id="order-success"></div>
+            </div>
+            <div class="order">
+                <div class="order-number" id="orderNumber"></div>
+            </div>
+            <div class="order">
+                <div class="order-remind">
+                    <div>請記住此訂單編號，或點選歷史訂單查詢訂單資訊</div>
+                </div>
+            </div>
+            <div class="order">
+                <div class="order-thanks" id="order-thanks"></div>
+            </div>
+
+
+
+
+            <footer class="footer" id="footer">COPYRIGHT © 2022 台北一日遊</footer>
+        </div>
+    </div>
+</body>
+<script src="../static/thankyou.js" type="text/javascript"></script>
+
+</html>
