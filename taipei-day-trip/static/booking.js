@@ -20,6 +20,9 @@ var i = 0;
 var creditCardNumber = document.getElementById("credit-card-number");
 var creditCardDate = document.getElementById("credit-card-date");
 var creditCardCCV = document.getElementById("credit-card-ccv");
+var contactName = document.getElementById("contact-name");
+var contactEmail = document.getElementById("contact-email");
+var contactPhone = document.getElementById("contact-phone");
 
 let model = {
     dataJWT: null,
@@ -80,69 +83,71 @@ let model = {
 
     getPrime: function (event) {
         event.preventDefault()
-        const tappayStatus = TPDirect.card.getTappayFieldsStatus()
-        if (tappayStatus.canGetPrime === false) {
-            console.log('can not get prime')
-            return
+        if (contactName.value && contactEmail.value && contactPhone.value != null) {
+            const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+            if (tappayStatus.canGetPrime === false) {
+                console.log('can not get prime')
+                return
+            }
+
+            TPDirect.card.getPrime(async (result) => {
+                const res = await pay({
+                    "prime": result.card.prime,
+                });
+            });
+
+            const pay = async (data) => {
+                let orderInfo = {
+                    "prime": data["prime"],
+                    "order": {
+                        "price": this.dataBookingInfo["data"]["price"],
+                        "trip": {
+                            "attraction": {
+                                "id": this.dataBookingInfo["data"]["attraction"]["id"],
+                                "name": this.dataBookingInfo["data"]["attraction"]["name"],
+                                "address": this.dataBookingInfo["data"]["attraction"]["address"],
+                                "image": this.dataBookingInfo["data"]["attraction"]["image"]
+                            },
+                            "date": this.dataBookingInfo["data"]["date"],
+                            "time": this.dataBookingInfo["data"]["time"]
+                        },
+                        "contact": {
+                            "name": contactName.value,
+                            "email": contactEmail.value,
+                            "phone": contactPhone.value
+                        }
+                    }
+                };
+
+                return fetch("/api/orders", {
+                    method: "POST",
+                    credentials: "include",
+                    body: JSON.stringify(orderInfo),
+                    cache: "no-cache",
+                    headers: {
+                        "content-type": "application/json"
+                    }
+                })
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((data) => {
+                        let orderNumber = data.number
+                        if (data.ok == true) {
+                            location.replace("http://54.248.52.136:3000/thankyou?number=" + orderNumber + "&paid=success");
+                        }
+
+                        if (data.ok == false) {
+                            location.replace("http://54.248.52.136:3000/thankyou?number=" + orderNumber + "&paid=fail");
+                        }
+
+
+                    });
+            }
         }
 
-        TPDirect.card.getPrime(async (result) => {
-            const res = await pay({
-                "prime": result.card.prime,
-            });
-        });
-
-        const pay = async (data) => {
-            console.log(data)
-            let contactName = document.getElementById("contact-name");
-            let contactEmail = document.getElementById("contact-email");
-            let contactPhone = document.getElementById("contact-phone");
-            let orderInfo = {
-                "prime": data["prime"],
-                "order": {
-                    "price": this.dataBookingInfo["data"]["price"],
-                    "trip": {
-                        "attraction": {
-                            "id": this.dataBookingInfo["data"]["attraction"]["id"],
-                            "name": this.dataBookingInfo["data"]["attraction"]["name"],
-                            "address": this.dataBookingInfo["data"]["attraction"]["address"],
-                            "image": this.dataBookingInfo["data"]["attraction"]["image"]
-                        },
-                        "date": this.dataBookingInfo["data"]["date"],
-                        "time": this.dataBookingInfo["data"]["time"]
-                    },
-                    "contact": {
-                        "name": contactName.value,
-                        "email": contactEmail.value,
-                        "phone": contactPhone.value
-                    }
-                }
-            };
-
-            return fetch("/api/orders", {
-                method: "POST",
-                credentials: "include",
-                body: JSON.stringify(orderInfo),
-                cache: "no-cache",
-                headers: {
-                    "content-type": "application/json"
-                }
-            })
-                .then((response) => {
-                    return response.json();
-                })
-                .then((data) => {
-                    let orderNumber = data.number
-                    if (data.ok == true) {
-                        location.replace("http://54.248.52.136:3000/thankyou?number=" + orderNumber + "&paid=success");
-                    }
-
-                    if (data.ok == false) {
-                        location.replace("http://54.248.52.136:3000/thankyou?number=" + orderNumber + "&paid=fail");
-                    }
-
-
-                });
+        else {
+            onclick = null;
         }
     }
 }
@@ -150,7 +155,7 @@ let model = {
 let view = {
     renderInit: function (data) {
         if (data === null) {
-            location.replace("http://54.248.52.136:3000/");
+            location.replace('http://54.248.52.136:3000/');
         }
         if (data !== null) {
             let bookingName = document.getElementById("booking-name");
@@ -220,7 +225,7 @@ let view = {
     },
 
     renderFrontPage: function () {
-        location.replace("http://54.248.52.136:3000/");
+        location.replace('http://54.248.52.136:3000/');
     },
 
     renderBookingInfo: function (data, responseStatus) {
@@ -253,7 +258,7 @@ let view = {
 
     renderLogoutButton: function (data) {
         if (data.ok == true) {
-            location.replace("http://54.248.52.136:3000/");
+            location.replace('http://54.248.52.136:3000/');
         }
         else {
             location.reload(true);

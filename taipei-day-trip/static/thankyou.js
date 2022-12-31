@@ -53,7 +53,7 @@ let model = {
 let view = {
     renderInit: function (data) {
         if (data === null) {
-            location.replace("http://54.248.52.136:3000/");
+            location.replace('http://54.248.52.136:3000/');
         }
         if (data !== null) {
             contorller.deleteBooking()
@@ -72,13 +72,13 @@ let view = {
     },
 
     renderFrontPage: function () {
-        location.replace("http://54.248.52.136:3000/");
+        location.replace('http://54.248.52.136:3000/');
     },
 
 
     renderLogoutButton: function (data) {
         if (data.ok == true) {
-            location.replace("http://54.248.52.136:3000/");
+            location.replace('http://54.248.52.136:3000/');
         }
         else {
             location.reload(true);
@@ -86,7 +86,7 @@ let view = {
     },
 
     renderBookingPage: function () {
-        location.replace("http://54.248.52.136:3000/booking")
+        location.replace('http://54.248.52.136:3000/booking')
     },
 
 

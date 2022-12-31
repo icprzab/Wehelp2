@@ -1,4 +1,3 @@
-
 var attractionID = location.pathname;
 var split = attractionID.split("/");
 var id = split[2];
@@ -187,7 +186,7 @@ let view = {
     },
 
     renderFrontPage: function () {
-        location.replace("http://54.248.52.136:3000/");
+        location.replace('http://54.248.52.136:3000/');
     },
 
     renderShowWindow: function () {
@@ -383,7 +382,7 @@ let view = {
 
     renderReturnBooking: function (data) {
         if (data !== null) {
-            location.replace("http://54.248.52.136:3000/booking");
+            location.replace('http://54.248.52.136:3000/booking');
         }
         if (data === null) {
             contorller.showWindow();
@@ -402,7 +401,7 @@ let view = {
     renderBookingButton: function (data) {
         if (date.value !== "") {
             if (data.ok == true) {
-                location.replace("http://54.248.52.136:3000/booking");
+                location.replace('http://54.248.52.136:3000/booking');
             }
             else {
                 location.reload(true);
