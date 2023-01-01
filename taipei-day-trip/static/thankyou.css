@@ -1,0 +1,525 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width:1920px) {
+    .taipei-day-trip {
+        width: 100vw;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        z-index: 5;
+    }
+
+    .windowBackground {
+        position: fixed;
+        z-index: 2;
+        width: 100vw;
+        background-color: black;
+        opacity: 0.25;
+        display: none;
+        min-height: 100%;
+        height: 100vh;
+    }
+
+    .windowOutside {
+        position: relative;
+        display: none;
+        justify-content: center;
+    }
+
+    .windowPage {
+        position: fixed;
+        z-index: 3;
+        width: 340px;
+        height: 275px;
+        background-color: white;
+        margin-top: 80px;
+        border-radius: 6px;
+    }
+
+    .window-inside {
+        position: relative;
+        display: grid;
+        justify-items: center;
+        align-items: start;
+        width: 100%;
+        height: 100%;
+    }
+
+    .window-inside-top {
+        width: 340px;
+        height: 10px;
+        background: linear-gradient(90deg, #66AABB, #337788);
+        border-radius: 6px 6px 0px 0px;
+    }
+
+    .window-inside-closebutton {
+        position: absolute;
+        z-index: 4;
+        padding: 0px;
+        border: 0px;
+        background-color: white;
+        left: calc(100% - 35px);
+        top: 27px;
+        cursor: pointer;
+    }
+
+
+    .window-inside-text-member {
+        display: flex;
+        justify-content: center;
+        color: #666666;
+        font-family: "Noto Sans TC";
+        font-size: 24px;
+        font-weight: 700;
+        width: 310px;
+    }
+
+    .window-inside-input {
+        width: 295px;
+        height: 47px;
+        padding: 0px 0px 0px 15px;
+        border-width: 0px;
+        border: solid 1px #CCCCCC;
+        border-radius: 5px;
+    }
+
+    .window-inside-input-name {
+        display: none;
+        width: 295px;
+        height: 47px;
+        padding: 0px 0px 0px 15px;
+        border-width: 0px;
+        border: solid 1px #CCCCCC;
+        border-radius: 5px;
+    }
+
+    .window-inside-login {
+        width: 310px;
+        height: 47px;
+        background-color: #448899;
+        padding: 0px;
+        border-width: 0px;
+        border-radius: 5px;
+        color: white;
+        font-family: "Noto Sans TC";
+        font-size: 19px;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .window-inside-email-repeat {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 310px;
+        background-color: white;
+        font-family: "Noto Sans TC";
+        font-size: 14px;
+        font-weight: 500;
+        color: red;
+        height: 17px;
+    }
+
+    .window-inside-signup-success {
+        display: none;
+        justify-content: center;
+        width: 310px;
+        background-color: white;
+        font-family: "Noto Sans TC";
+        font-size: 14px;
+        font-weight: 500;
+        color: #1cdc2c;
+        height: 17px;
+    }
+
+    .window-inside-signup-fail {
+        display: none;
+        justify-content: center;
+        width: 310px;
+        background-color: white;
+        font-family: "Noto Sans TC";
+        font-size: 14px;
+        font-weight: 500;
+        color: red;
+        height: 17px;
+    }
+
+    .window-inside-login-fail {
+        display: none;
+        justify-content: center;
+        width: 310px;
+        background-color: white;
+        font-family: "Noto Sans TC";
+        font-size: 14px;
+        font-weight: 500;
+        color: red;
+        height: 17px;
+    }
+
+    .window-inside-signup {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 310px;
+        height: 47px;
+        background-color: #448899;
+        padding: 0px;
+        border-width: 0px;
+        border-radius: 5px;
+        color: white;
+        font-family: "Noto Sans TC";
+        font-size: 19px;
+        font-weight: 400;
+        cursor: pointer;
+    }
+
+    .window-inside-text-signup {
+        display: flex;
+        justify-content: center;
+        width: 310px;
+        background-color: white;
+        border-width: 0px;
+        padding: 0px;
+        font-family: "Noto Sans TC";
+        font-size: 16px;
+        font-weight: 500;
+        color: #666666;
+        cursor: pointer;
+    }
+
+    .window-inside-text-signin {
+        display: none;
+        justify-content: center;
+        width: 310px;
+        background-color: white;
+        border-width: 0px;
+        padding: 0px;
+        font-family: "Noto Sans TC";
+        font-size: 16px;
+        font-weight: 500;
+        color: #666666;
+        cursor: pointer;
+    }
+
+    .sectionTop-Outside {
+        position: absolute;
+        z-index: 0;
+    }
+
+    .sectionTop {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 100vw;
+    }
+
+    .sectionTop-space-between {
+        height: 54px;
+        width: 1200px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .sectionTop-1 {
+        font-size: 30px;
+        font-family: "Noto Sans TC";
+        line-height: 34px;
+        font-weight: bold;
+        color: #448899;
+        cursor: pointer;
+        border-width: 0px;
+        padding: 0px;
+        background-color: white;
+        text-decoration: none;
+    }
+
+    .sectionTop-2 {
+        font-size: 20px;
+        display: flex;
+    }
+
+    .sectionTopBooking {
+        margin: 0px 10px 0px 10px;
+        display: flex;
+        position: relative;
+        z-index: 1;
+        color: #666666;
+        font-family: "Noto Sans TC";
+        line-height: 13.3px;
+        font-size: 16px;
+        font-weight: 500;
+        background-color: white;
+        border: 0px;
+        padding: 0px;
+        cursor: pointer;
+    }
+
+    .sectionTopLogin {
+        margin: 0px 10px 0px 10px;
+        display: flex;
+        position: relative;
+        z-index: 1;
+        color: #666666;
+        font-family: "Noto Sans TC";
+        line-height: 13.3px;
+        font-size: 16px;
+        font-weight: 500;
+        background-color: white;
+        border: 0px;
+        padding: 0px;
+        cursor: pointer;
+    }
+
+    .sectionTopLogout {
+        margin: 0px 10px 0px 10px;
+        display: flex;
+        position: relative;
+        z-index: 1;
+        color: #666666;
+        font-family: "Noto Sans TC";
+        line-height: 13.3px;
+        font-size: 16px;
+        font-weight: 500;
+        background-color: white;
+        border: 0px;
+        padding: 0px;
+        cursor: pointer;
+    }
+
+    .separator-top-outside {
+        display: flex;
+        justify-content: center;
+        background-color: white;
+        width: 100vw;
+        height: 1px;
+    }
+
+    .separator-top {
+        height: 1px;
+        background-color: #E8E8E8;
+        width: 100vw;
+        display: flex;
+        text-align: center;
+    }
+
+    .order {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        font-family: "Noto Sans TC";
+        color: #666666;
+        margin: 20px 0px 20px 0px;
+    }
+
+    .order-success {
+        margin-top: 50px;
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    .order-number {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 10px 0px 10px 0px;
+    }
+
+    .order-remind {
+        display: flex;
+        font-size: 19px;
+        font-weight: 500;
+        margin: 0px 20px 0px 20px;
+        justify-content: center;
+    }
+
+    .order-thanks {
+        margin: -10px 0px 55px 0px;
+        font-size: 19px;
+        font-weight: 500;
+    }
+
+    .footer {
+        width: 100vw;
+        height: calc(100vh - 391px);
+        background-color: #757575;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Noto Sans TC";
+        font-size: 16px;
+        line-height: 13.3px;
+        font-weight: 700;
+    }
+
+}
+
+@media (max-width:1280px) {
+
+    .sectionTop {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 100vw;
+    }
+
+    .sectionTop-space-between {
+        height: 54px;
+        width: 93.5vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .sectionTop-1 {
+        font-size: 30px;
+        font-family: "Noto Sans TC";
+        line-height: 34px;
+        font-weight: bold;
+        color: #448899;
+    }
+
+    .sectionTop-2 {
+        font-size: 20px;
+        display: flex;
+    }
+
+    .separator-top-outside {
+        display: flex;
+        justify-content: center;
+        background-color: white;
+        width: 100vw;
+        height: 1px;
+    }
+
+    .separator-top {
+        height: 1px;
+        background-color: #E8E8E8;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+    }
+
+
+
+}
+
+
+@media (max-width:520px) {
+
+    .sectionTop {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 100vw;
+    }
+
+    .sectionTop-space-between {
+        height: 54px;
+        width: 93.5vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .sectionTop-1 {
+        font-size: 30px;
+        font-family: "Noto Sans TC";
+        line-height: 34px;
+        font-weight: bold;
+        color: #448899;
+    }
+
+    .sectionTop-2 {
+        font-size: 20px;
+        display: flex;
+    }
+
+    .separator-top-outside {
+        display: flex;
+        justify-content: center;
+        background-color: white;
+        width: 100vw;
+        height: 1px;
+    }
+
+    .separator-top {
+        height: 1px;
+        background-color: #E8E8E8;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+    }
+
+
+    .order {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        font-family: "Noto Sans TC";
+        color: #666666;
+        margin: 20px 0px 20px 0px;
+    }
+
+    .order-success {
+        margin-top: 50px;
+        font-size: 25px;
+        font-weight: 700;
+    }
+
+    .order-number {
+        font-size: 25px;
+        font-weight: 700;
+        margin: 10px 0px 10px 0px;
+    }
+
+    .order-remind {
+        display: flex;
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0px 20px 0px 20px;
+        text-align: center
+    }
+
+    .order-thanks {
+        margin: -10px 0px 55px 0px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    .footer {
+        width: 100vw;
+        height: 104px;
+        background-color: #757575;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Noto Sans TC";
+        font-size: 16px;
+        line-height: 13.3px;
+        font-weight: 700;
+    }
+
+
+
+
+}

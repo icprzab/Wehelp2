@@ -399,6 +399,7 @@ let contorller = {
         await view.renderCategories(model.dataCategories);
         observer.observe(document.getElementsByClassName("footer")[0]);
     },
+
     getAttractions: async function () {
         await model.getAttractions();
         view.renderGetAttractions(model.dataGetAttractions);

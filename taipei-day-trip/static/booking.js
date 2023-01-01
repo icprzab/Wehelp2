@@ -17,6 +17,12 @@ var bookingContent = document.getElementById("booking-content");
 var bookingContentOutside = document.getElementById("booking-content-outside");
 var footer = document.getElementById("footer");
 var i = 0;
+var creditCardNumber = document.getElementById("credit-card-number");
+var creditCardDate = document.getElementById("credit-card-date");
+var creditCardCCV = document.getElementById("credit-card-ccv");
+var contactName = document.getElementById("contact-name");
+var contactEmail = document.getElementById("contact-email");
+var contactPhone = document.getElementById("contact-phone");
 
 let model = {
     dataJWT: null,
@@ -24,6 +30,7 @@ let model = {
     dataLogoutButton: null,
     dataDeleteBooking: null,
     responseStatus: null,
+    dataOrder: null,
     init: function () {
         return fetch(
             "/api/user/auth", {
@@ -74,7 +81,75 @@ let model = {
             });
     },
 
+    getPrime: function (event) {
+        event.preventDefault()
+        if (contactName.value && contactEmail.value && contactPhone.value != null) {
+            const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+            if (tappayStatus.canGetPrime === false) {
+                console.log('can not get prime')
+                return
+            }
 
+            TPDirect.card.getPrime(async (result) => {
+                const res = await pay({
+                    "prime": result.card.prime,
+                });
+            });
+
+            const pay = async (data) => {
+                let orderInfo = {
+                    "prime": data["prime"],
+                    "order": {
+                        "price": this.dataBookingInfo["data"]["price"],
+                        "trip": {
+                            "attraction": {
+                                "id": this.dataBookingInfo["data"]["attraction"]["id"],
+                                "name": this.dataBookingInfo["data"]["attraction"]["name"],
+                                "address": this.dataBookingInfo["data"]["attraction"]["address"],
+                                "image": this.dataBookingInfo["data"]["attraction"]["image"]
+                            },
+                            "date": this.dataBookingInfo["data"]["date"],
+                            "time": this.dataBookingInfo["data"]["time"]
+                        },
+                        "contact": {
+                            "name": contactName.value,
+                            "email": contactEmail.value,
+                            "phone": contactPhone.value
+                        }
+                    }
+                };
+
+                return fetch("/api/orders", {
+                    method: "POST",
+                    credentials: "include",
+                    body: JSON.stringify(orderInfo),
+                    cache: "no-cache",
+                    headers: {
+                        "content-type": "application/json"
+                    }
+                })
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((data) => {
+                        let orderNumber = data.number
+                        if (data.ok == true) {
+                            location.replace("http://54.248.52.136:3000/thankyou?number=" + orderNumber + "&paid=success");
+                        }
+
+                        if (data.ok == false) {
+                            location.replace("http://54.248.52.136:3000/thankyou?number=" + orderNumber + "&paid=fail");
+                        }
+
+
+                    });
+            }
+        }
+
+        else {
+            onclick = null;
+        }
+    }
 }
 
 let view = {
@@ -87,6 +162,70 @@ let view = {
             bookingName.innerHTML = "您好，" + data.name + "，待預訂的行程如下：";
             contorller.bookingInfo();
         }
+    },
+
+    renderTapPay: function () {
+
+        TPDirect.setupSDK(`${APP_ID}`, `${APP_KEY}`, 'sandbox')
+
+        var fields = {
+            number: {
+                element: '#card-number',
+                placeholder: '**** **** **** ****'
+            },
+            expirationDate: {
+                element: document.getElementById('card-expiration-date'),
+                placeholder: 'MM / YY'
+            },
+            ccv: {
+                element: '#card-ccv',
+                placeholder: 'CVV'
+            }
+        }
+
+        TPDirect.card.setup({
+            fields: fields,
+            styles: {
+                'input': {
+                    'color': 'gray',
+                    'font-family': 'Noto Sans TC',
+                },
+                'input.ccv': {
+                    'font-size': '16px'
+                },
+                'input.expiration-date': {
+                    'font-size': '16px'
+                },
+                'input.card-number': {
+                    'font-size': '16px'
+                },
+                ':focus': {
+                    'color': 'black',
+                    'border-color': 'black',
+                    'border-width': '1.5px'
+                },
+                '.valid': {
+                    'color': 'green'
+                },
+                '.invalid': {
+                    'color': 'red'
+                },
+                '@media screen and (max-width: 400px)': {
+                    'input': {
+                        'color': 'black'
+                    }
+                }
+            },
+            isMaskCreditCardNumber: true,
+            maskCreditCardNumberRange: {
+                beginIndex: 6,
+                endIndex: 11
+            }
+        })
+    },
+
+    renderFrontPage: function () {
+        location.replace('http://54.248.52.136:3000/');
     },
 
     renderBookingInfo: function (data, responseStatus) {
@@ -104,7 +243,6 @@ let view = {
             img.src = data.data.attraction.image[0];
             image.appendChild(img).setAttribute("class", "imageInside");
         }
-
         if (responseStatus == 403) {
             bookingInfo.style.display = "none";
             bookingContentOutside.style.display = "none";
@@ -116,7 +254,6 @@ let view = {
             footer.style.marginTop = "40px"
             footer.style.padding = "45px 0px 0px 0px";
         }
-
     },
 
     renderLogoutButton: function (data) {
@@ -141,40 +278,24 @@ let view = {
         location.reload(true);
     },
 
-    renderBlankSpace: function () {
-        let creditCardNumber = document.getElementById("credit-card-number").value;
-        if (creditCardNumber.length == 4 || creditCardNumber.length == 9 || creditCardNumber.length == 14) {
-            document.getElementById("credit-card-number").value = creditCardNumber + " ";
-        }
-    },
-
     renderIsInputNumber: function (evt) {
-        var ch = String.fromCharCode(evt.which);
+        var x = evt.which || evt.keyCode;
+        var ch = String.fromCharCode(x);
         if (!(/[0-9]/.test(ch))) {
             evt.preventDefault();
         }
     },
-
-    renderSlash: function () {
-        let creditCarDate = document.getElementById("credit-card-date").value;
-        if (creditCarDate.length == 2) {
-            document.getElementById("credit-card-date").value = creditCarDate + " / ";
-        }
-        if (creditCarDate.length == 3) {
-            document.getElementById("credit-card-date").value = creditCarDate + "/ ";
-        }
-        if (creditCarDate.length == 4) {
-            document.getElementById("credit-card-date").value = creditCarDate + " ";
-        }
-    },
-
-
 };
 
 let contorller = {
     init: async function () {
         await model.init();
-        view.renderInit(model.dataJWT);
+        await view.renderInit(model.dataJWT);
+        view.renderTapPay();
+    },
+
+    frontPage: function () {
+        view.renderFrontPage();
     },
 
     bookingInfo: async function () {
@@ -196,19 +317,16 @@ let contorller = {
         view.renderBookingPage();
     },
 
-    blankSpace: function () {
-        view.renderBlankSpace();
-    },
-
-
     isInputNumber: function (evt) {
         view.renderIsInputNumber(evt);
     },
 
-    slash: function () {
-        view.renderSlash();
+    order: function (event) {
+        model.getPrime(event);
     },
 
 }
+
 contorller.init();
+
 

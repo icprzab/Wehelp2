@@ -1,4 +1,3 @@
-
 var attractionID = location.pathname;
 var split = attractionID.split("/");
 var id = split[2];
@@ -24,7 +23,7 @@ var text = document.getElementById("attraction-booking5-fee2");
 var button1 = document.getElementById("attraction-booking4-button1");
 var button2 = document.getElementById("attraction-booking4-button2");
 var slideIndex = 1;
-var price = "新台幣 2000 元";
+var price = "2000";
 var time = "上半天";
 var date = document.getElementById("attraction-booking-date");
 
@@ -167,7 +166,6 @@ let model = {
             })
             .then((data) => {
                 this.dataBookingButton = data;
-
             });
     },
 
@@ -185,6 +183,10 @@ let view = {
             sectionTopLogin.style.display = "none";
             sectionTopLogout.style.display = "flex";
         }
+    },
+
+    renderFrontPage: function () {
+        location.replace('http://54.248.52.136:3000/');
     },
 
     renderShowWindow: function () {
@@ -288,7 +290,7 @@ let view = {
     },
 
     renderFirst: function () {
-        price = "新台幣 2000 元";
+        price = 2000;
         time = "上半天";
         text.innerHTML = "新台幣 2000 元";
         button1.style.backgroundColor = "#448899";
@@ -296,7 +298,7 @@ let view = {
     },
 
     renderSecond: function () {
-        price = "新台幣 2500 元";
+        price = 2500;
         time = "下半天";
         text.innerHTML = "新台幣 2500 元";
         button1.style.backgroundColor = "white";
@@ -423,6 +425,10 @@ let contorller = {
         view.renderShowSlides(slideIndex);
     },
 
+    frontPage: function () {
+        view.renderFrontPage();
+    },
+
     showWindow: function () {
         view.renderShowWindow();
     },
@@ -494,6 +500,8 @@ let contorller = {
 
 }
 contorller.init();
+
+
 
 
 
