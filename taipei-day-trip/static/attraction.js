@@ -1,3 +1,4 @@
+
 var attractionID = location.pathname;
 var split = attractionID.split("/");
 var id = split[2];
